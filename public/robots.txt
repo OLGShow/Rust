@@ -1,0 +1,105 @@
+# robots.txt для RUST Store
+# Управление индексацией поисковыми роботами
+
+# Разрешить всем роботам доступ ко всему сайту
+User-agent: *
+Allow: /
+
+# Запретить доступ к административным разделам
+Disallow: /admin/
+Disallow: /api/
+Disallow: /auth/callback/
+Disallow: /_next/
+Disallow: /static/
+
+# Запретить доступ к приватным файлам
+Disallow: /private/
+Disallow: /.env
+Disallow: /config/
+Disallow: /logs/
+
+# Разрешить доступ к важным файлам
+Allow: /static/images/
+Allow: /static/css/
+Allow: /static/js/
+
+# Специальные правила для основных поисковых систем
+
+# Google
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+# Yandex
+User-agent: YandexBot
+Allow: /
+Crawl-delay: 2
+
+# Bing
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# Запретить доступ нежелательным ботам
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+# Sitemap
+Sitemap: https://rust-store.example.com/sitemap.xml
+
+# Дополнительные директивы
+# Частота сканирования для разных разделов
+
+# Каталог товаров - высокий приоритет
+User-agent: *
+Allow: /catalog/
+Crawl-delay: 1
+
+# Товары - средний приоритет  
+User-agent: *
+Allow: /product/
+Crawl-delay: 2
+
+# Серверы - обновляются часто
+User-agent: *
+Allow: /servers/
+Crawl-delay: 1
+
+# Статические страницы - низкий приоритет
+User-agent: *
+Allow: /about/
+Allow: /contact/
+Allow: /faq/
+Allow: /terms/
+Allow: /privacy-policy/
+Crawl-delay: 5
+
+# Запретить индексацию дубликатов и служебных страниц
+Disallow: /*?*
+Disallow: /search?*
+Disallow: /cart
+Disallow: /checkout
+Disallow: /profile
+Disallow: /dashboard
+
+# Разрешить индексацию некоторых параметров
+Allow: /*?category=*
+Allow: /*?server=*
+
+# Время ожидания по умолчанию
+Crawl-delay: 2
+
+# Максимальная частота запросов (для поддерживающих ботов)
+Request-rate: 1/10s
+
+# Время посещения (UTC)
+Visit-time: 0600-2200 

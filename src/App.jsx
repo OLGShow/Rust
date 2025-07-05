@@ -15,13 +15,20 @@ import {
   Minus,
   Crown,
   Zap,
-  Gift
+  Gift,
+  Settings
 } from 'lucide-react';
 import { Button } from './components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from './components/ui/card';
 import { Badge } from './components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from './components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './components/ui/tabs';
+import SteamAuthComponent from './components/SteamAuth';
+import AdminPanel from './components/AdminPanel';
+import { LazyAvatar } from './components/ui/LazyImage';
+import LazySection from './components/ui/LazySection';
+import CookieConsent from './components/CookieConsent';
+import { trackAddToCart, trackLogin, trackPageView, trackEvent } from './lib/analytics';
 import './App.css';
 
 const App = () => {
@@ -29,6 +36,10 @@ const App = () => {
   const [cart, setCart] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [steamUser, setSteamUser] = useState(null);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [showAdminPanel, setShowAdminPanel] = useState(false);
+  const [allProducts, setAllProducts] = useState(products);
 
   // Данные серверов
   const servers = [
@@ -193,22 +204,84 @@ const App = () => {
 
   useEffect(() => {
     if (activeCategory === 'all') {
-      setFilteredProducts(products);
+      setFilteredProducts(allProducts);
     } else {
-      setFilteredProducts(products.filter(product => product.category === activeCategory));
+      setFilteredProducts(allProducts.filter(product => product.category === activeCategory));
     }
-  }, [activeCategory]);
+    
+    // Отслеживаем смену категории
+    if (activeCategory !== 'all') {
+      trackEvent('category_filter', {
+        category: activeCategory,
+        products_count: allProducts.filter(product => product.category === activeCategory).length
+      });
+    }
+  }, [activeCategory, allProducts]);
 
-  const addToCart = (product) => {
+  // Отслеживание загрузки страницы
+  useEffect(() => {
+    trackPageView('/', 'RUST Store - Главная страница');
+  }, []);
+
+  // Обработчик изменения авторизации Steam
+  const handleAuthChange = (userData) => {
+    setSteamUser(userData);
+    if (userData) {
+      setIsAuthModalOpen(false);
+      // Отслеживаем авторизацию
+      trackLogin('steam');
+      trackEvent('user_login', {
+        steam_id: userData.steamId,
+        username: userData.userInfo?.personaname,
+        owns_rust: userData.ownsRust
+      });
+    }
+  };
+
+  // Обработчик обновления товаров
+  const handleProductUpdate = (product) => {
+    if (product.deleted) {
+      setAllProducts(prev => prev.filter(p => p.id !== product.id));
+    } else if (product.id && allProducts.find(p => p.id === product.id)) {
+      setAllProducts(prev => prev.map(p => p.id === product.id ? product : p));
+    } else {
+      setAllProducts(prev => [...prev, product]);
+    }
+  };
+
+  // Обработчик обновления серверов
+  const handleServerUpdate = (server) => {
+    // Здесь будет логика обновления серверов
+    console.log('Server update:', server);
+  };
+
+  // Проверка прав администратора
+  const isAdmin = steamUser?.steamId === '76561198000000000' || 
+                  steamUser?.userInfo?.personaname === 'Admin';
+
+    const addToCart = (product) => {
     setCart(prev => {
       const existing = prev.find(item => item.id === product.id);
       if (existing) {
-        return prev.map(item =>
-          item.id === product.id
+        // Отслеживаем увеличение количества
+        trackEvent('add_to_cart', {
+          item_id: product.id,
+          item_name: product.name,
+          category: product.category,
+          price: product.price,
+          quantity: existing.quantity + 1
+        });
+        
+        return prev.map(item => 
+          item.id === product.id 
             ? { ...item, quantity: item.quantity + 1 }
             : item
         );
       }
+      
+      // Отслеживаем добавление нового товара
+      trackAddToCart(product);
+      
       return [...prev, { ...product, quantity: 1 }];
     });
   };
@@ -289,10 +362,64 @@ const App = () => {
             </div>
             
             <div className="flex items-center space-x-4">
-              <Button variant="outline" className="border-white/20 text-white hover:bg-white/10">
-                <Users className="h-4 w-4 mr-2" />
-                Войти через Steam
-              </Button>
+              {/* Steam авторизация */}
+              {steamUser ? (
+                                  <div className="flex items-center space-x-3">
+                    <div className="flex items-center space-x-2">
+                      <LazyAvatar 
+                        src={steamUser.userInfo?.avatar} 
+                        alt="Steam Avatar"
+                        size="sm"
+                        className="border-2 border-orange-500/30"
+                      />
+                      <div className="text-sm">
+                        <div className="text-white font-medium">{steamUser.userInfo?.personaname}</div>
+                        <div className="text-gray-400 text-xs">Steam ID: {steamUser.steamId?.slice(-4)}</div>
+                      </div>
+                    </div>
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button variant="outline" size="sm" className="border-white/20 text-white hover:bg-white/10">
+                        Профиль
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="bg-gray-900 border-white/20 text-white max-w-md">
+                      <DialogHeader>
+                        <DialogTitle>Steam профиль</DialogTitle>
+                      </DialogHeader>
+                      <SteamAuthComponent onAuthChange={handleAuthChange} />
+                    </DialogContent>
+                  </Dialog>
+                  
+                  {/* Кнопка админ-панели */}
+                  {isAdmin && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setShowAdminPanel(true)}
+                      className="border-purple-500/30 text-purple-400 hover:bg-purple-500/10"
+                    >
+                      <Settings className="h-4 w-4 mr-1" />
+                      Админ
+                    </Button>
+                  )}
+                </div>
+              ) : (
+                <Dialog open={isAuthModalOpen} onOpenChange={setIsAuthModalOpen}>
+                  <DialogTrigger asChild>
+                    <Button variant="outline" className="border-white/20 text-white hover:bg-white/10">
+                      <Users className="h-4 w-4 mr-2" />
+                      Войти через Steam
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="bg-gray-900 border-white/20 text-white max-w-md">
+                    <DialogHeader>
+                      <DialogTitle>Авторизация Steam</DialogTitle>
+                    </DialogHeader>
+                    <SteamAuthComponent onAuthChange={handleAuthChange} />
+                  </DialogContent>
+                </Dialog>
+              )}
               
               <Button 
                 variant="outline" 
@@ -357,7 +484,16 @@ const App = () => {
                       ? 'bg-orange-500 text-white' 
                       : 'border-white/20 text-white hover:bg-white/10'
                   }`}
-                  onClick={() => setSelectedServer(server.id)}
+                  onClick={() => {
+                    setSelectedServer(server.id);
+                    // Отслеживаем выбор сервера
+                    trackEvent('server_select', {
+                      server_id: server.id,
+                      server_name: server.name,
+                      server_players: server.players,
+                      server_ping: server.ping
+                    });
+                  }}
                   disabled={server.status === 'maintenance'}
                 >
                   <div className={`w-4 h-4 rounded-full ${getServerColor(server.id)}`}></div>
@@ -404,8 +540,12 @@ const App = () => {
         </Tabs>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {filteredProducts.map((product) => {
+        <LazySection 
+          rootMargin="100px"
+          className="lazy-container"
+        >
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {filteredProducts.map((product) => {
             const Icon = getCategoryIcon(product.category);
             const discountedPrice = product.price * (1 - product.discount / 100);
             
@@ -526,7 +666,8 @@ const App = () => {
               </Card>
             );
           })}
-        </div>
+          </div>
+        </LazySection>
       </section>
 
       {/* Floating Cart */}
@@ -651,6 +792,28 @@ const App = () => {
           )}
         </DialogContent>
       </Dialog>
+
+      {/* Админ-панель */}
+      <Dialog open={showAdminPanel} onOpenChange={setShowAdminPanel}>
+        <DialogContent className="bg-gray-900 border-white/20 text-white max-w-6xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="flex items-center space-x-2">
+              <Settings className="h-5 w-5 text-orange-400" />
+              <span>Панель администратора</span>
+            </DialogTitle>
+          </DialogHeader>
+          <AdminPanel 
+            products={allProducts}
+            servers={servers}
+            onProductUpdate={handleProductUpdate}
+            onServerUpdate={handleServerUpdate}
+            steamUser={steamUser}
+          />
+        </DialogContent>
+      </Dialog>
+
+      {/* Cookie Consent Banner */}
+      <CookieConsent />
     </div>
   );
 };

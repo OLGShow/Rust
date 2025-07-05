@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+  
+  <!-- Главная страница -->
+  <url>
+    <loc>https://rust-store.example.com/</loc>
+    <lastmod>2024-12-20T12:00:00+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <!-- Каталог товаров -->
+  <url>
+    <loc>https://rust-store.example.com/catalog</loc>
+    <lastmod>2024-12-20T12:00:00+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- Категории товаров -->
+  <url>
+    <loc>https://rust-store.example.com/catalog/privileges</loc>
+    <lastmod>2024-12-20T12:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://rust-store.example.com/catalog/items</loc>
+    <lastmod>2024-12-20T12:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://rust-store.example.com/catalog/weapons</loc>
+    <lastmod>2024-12-20T12:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://rust-store.example.com/catalog/armor</loc>
+    <lastmod>2024-12-20T12:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Конкретные товары -->
+  <url>
+    <loc>https://rust-store.example.com/product/vip-privilege</loc>
+    <lastmod>2024-12-20T12:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://rust-store.example.com/product/premium-privilege</loc>
+    <lastmod>2024-12-20T12:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://rust-store.example.com/product/admin-privilege</loc>
+    <lastmod>2024-12-20T12:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://rust-store.example.com/product/starter-kit</loc>
+    <lastmod>2024-12-20T12:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://rust-store.example.com/product/building-kit</loc>
+    <lastmod>2024-12-20T12:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://rust-store.example.com/product/pvp-kit</loc>
+    <lastmod>2024-12-20T12:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <!-- Информационные страницы -->
+  <url>
+    <loc>https://rust-store.example.com/about</loc>
+    <lastmod>2024-12-20T12:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://rust-store.example.com/contact</loc>
+    <lastmod>2024-12-20T12:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://rust-store.example.com/faq</loc>
+    <lastmod>2024-12-20T12:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://rust-store.example.com/terms</loc>
+    <lastmod>2024-12-20T12:00:00+00:00</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  
+  <url>
+    <loc>https://rust-store.example.com/privacy-policy</loc>
+    <lastmod>2024-12-20T12:00:00+00:00</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  
+  <!-- Серверы -->
+  <url>
+    <loc>https://rust-store.example.com/servers</loc>
+    <lastmod>2024-12-20T12:00:00+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://rust-store.example.com/servers/red-server</loc>
+    <lastmod>2024-12-20T12:00:00+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://rust-store.example.com/servers/blue-server</loc>
+    <lastmod>2024-12-20T12:00:00+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://rust-store.example.com/servers/green-server</loc>
+    <lastmod>2024-12-20T12:00:00+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <!-- Аутентификация Steam -->
+  <url>
+    <loc>https://rust-store.example.com/auth/steam</loc>
+    <lastmod>2024-12-20T12:00:00+00:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  
+</urlset> 

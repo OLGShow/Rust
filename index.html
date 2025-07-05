@@ -53,18 +53,122 @@
     <title>RUST Store - Премиальный магазин внутриигровых покупок</title>
     
     <!-- Structured Data -->
+    <!-- Enhanced Structured Data для SEO -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
       "name": "RUST Store",
-      "url": "https://ruststore.ru/",
-      "description": "Премиальный магазин внутриигровых покупок для игры RUST",
+      "alternateName": "Магазин привилегий RUST",
+      "description": "Официальный магазин привилегий, предметов и услуг для игры RUST. Покупайте VIP статусы, игровые предметы и получайте преимущества на наших серверах.",
+      "url": "https://rust-store.example.com",
       "potentialAction": {
         "@type": "SearchAction",
-        "target": "https://ruststore.ru/search?q={search_term_string}",
+        "target": "https://rust-store.example.com/search?q={search_term_string}",
         "query-input": "required name=search_term_string"
+      },
+      "sameAs": [
+        "https://steamcommunity.com/groups/rust-store",
+        "https://discord.gg/rust-store",
+        "https://vk.com/rust-store",
+        "https://t.me/rust_store"
+      ]
+    }
+    </script>
+
+    <!-- Organization Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "RUST Store",
+      "description": "Магазин игровых привилегий и предметов для RUST серверов",
+      "url": "https://rust-store.example.com",
+      "logo": "https://rust-store.example.com/logo.png",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+7-800-555-0199",
+        "contactType": "customer service",
+        "availableLanguage": ["Russian", "English"]
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "RU"
       }
+    }
+    </script>
+
+    <!-- Product Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "VIP Привилегия RUST",
+      "description": "VIP статус для игры RUST с уникальными возможностями и привилегиями",
+      "category": "Digital Game Content",
+      "brand": {
+        "@type": "Brand",
+        "name": "RUST Store"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "299",
+        "priceCurrency": "RUB",
+        "availability": "https://schema.org/InStock",
+        "seller": {
+          "@type": "Organization",
+          "name": "RUST Store"
+        }
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "reviewCount": "156"
+      }
+    }
+    </script>
+
+    <!-- WebPage Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "RUST Store - Главная страница",
+      "description": "Купите привилегии и предметы для RUST. Steam авторизация, мгновенная выдача, поддержка 24/7.",
+      "url": "https://rust-store.example.com/",
+      "inLanguage": "ru-RU",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "RUST Store"
+      },
+      "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Главная",
+            "item": "https://rust-store.example.com/"
+          }
+        ]
+      }
+    }
+    </script>
+
+    <!-- GameServer Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "GameServer",
+      "name": "RUST Official Servers",
+      "description": "Официальные RUST серверы с привилегиями и модификациями",
+      "game": {
+        "@type": "VideoGame",
+        "name": "RUST",
+        "gamePlatform": "PC"
+      },
+      "playersOnline": "150",
+      "maxPlayers": "200"
     }
     </script>
   </head>
