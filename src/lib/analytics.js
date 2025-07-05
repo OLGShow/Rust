@@ -6,14 +6,14 @@
 // Конфигурация аналитики
 const ANALYTICS_CONFIG = {
   googleAnalytics: {
-    measurementId: process.env.REACT_APP_GA_MEASUREMENT_ID || 'G-XXXXXXXXXX',
-    enabled: process.env.NODE_ENV === 'production'
+    measurementId: 'G-XXXXXXXXXX',
+    enabled: false // Отключено для разработки
   },
   yandexMetrica: {
-    counterId: process.env.REACT_APP_YM_COUNTER_ID || '12345678',
-    enabled: process.env.NODE_ENV === 'production'
+    counterId: '12345678',
+    enabled: false // Отключено для разработки
   },
-  debug: process.env.NODE_ENV === 'development'
+  debug: true // Включено для разработки
 };
 
 class Analytics {
@@ -372,23 +372,42 @@ class Analytics {
   }
 }
 
-// Создаем глобальный экземпляр
-const analytics = new Analytics();
+// Создаем глобальный экземпляр с проверкой на ошибки
+let analytics = null;
+
+try {
+  analytics = new Analytics();
+} catch (error) {
+  console.warn('Analytics initialization failed:', error);
+  // Создаем заглушку
+  analytics = {
+    trackEvent: () => {},
+    trackPageView: () => {},
+    trackUser: () => {},
+    trackPurchase: () => {},
+    trackAddToCart: () => {},
+    trackBeginCheckout: () => {},
+    trackSearch: () => {},
+    trackLogin: () => {},
+    trackError: () => {},
+    setConsent: () => {},
+    getConsentStatus: () => ({ analytics: false, marketing: false, functional: true }),
+    getAnalyticsData: () => Promise.resolve({})
+  };
+}
 
 // Экспортируем методы для удобства использования
-export const {
-  trackEvent,
-  trackPageView,
-  trackUser,
-  trackPurchase,
-  trackAddToCart,
-  trackBeginCheckout,
-  trackSearch,
-  trackLogin,
-  trackError,
-  setConsent,
-  getConsentStatus,
-  getAnalyticsData
-} = analytics;
+export const trackEvent = (eventName, eventParams) => analytics?.trackEvent?.(eventName, eventParams);
+export const trackPageView = (pagePath, pageTitle) => analytics?.trackPageView?.(pagePath, pageTitle);
+export const trackUser = (userId, userProperties) => analytics?.trackUser?.(userId, userProperties);
+export const trackPurchase = (transactionId, items, value, currency) => analytics?.trackPurchase?.(transactionId, items, value, currency);
+export const trackAddToCart = (item) => analytics?.trackAddToCart?.(item);
+export const trackBeginCheckout = (items, value) => analytics?.trackBeginCheckout?.(items, value);
+export const trackSearch = (searchTerm, category) => analytics?.trackSearch?.(searchTerm, category);
+export const trackLogin = (method) => analytics?.trackLogin?.(method);
+export const trackError = (errorMessage, errorLocation) => analytics?.trackError?.(errorMessage, errorLocation);
+export const setConsent = (consentData) => analytics?.setConsent?.(consentData);
+export const getConsentStatus = () => analytics?.getConsentStatus?.() || { analytics: false, marketing: false, functional: true };
+export const getAnalyticsData = (dateRange) => analytics?.getAnalyticsData?.(dateRange) || Promise.resolve({});
 
 export default analytics; 

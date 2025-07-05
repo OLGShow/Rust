@@ -3,8 +3,19 @@ import { cn } from '../../lib/utils'
 
 const TabsContext = createContext()
 
-const Tabs = ({ defaultValue, className, children, ...props }) => {
-  const [value, setValue] = useState(defaultValue)
+const Tabs = ({ defaultValue, value: controlledValue, onValueChange, className, children, ...props }) => {
+  const [internalValue, setInternalValue] = useState(defaultValue)
+  
+  const isControlled = controlledValue !== undefined
+  const value = isControlled ? controlledValue : internalValue
+  
+  const setValue = (newValue) => {
+    if (isControlled) {
+      onValueChange?.(newValue)
+    } else {
+      setInternalValue(newValue)
+    }
+  }
   
   return (
     <TabsContext.Provider value={{ value, setValue }}>

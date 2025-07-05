@@ -28,8 +28,169 @@ import AdminPanel from './components/AdminPanel';
 import { LazyAvatar } from './components/ui/LazyImage';
 import LazySection from './components/ui/LazySection';
 import CookieConsent from './components/CookieConsent';
+
+// Безопасный импорт analytics
 import { trackAddToCart, trackLogin, trackPageView, trackEvent } from './lib/analytics';
+
 import './App.css';
+
+// Данные товаров
+const products = [
+  {
+    id: 1,
+    name: "VIP Package",
+    price: 540,
+    category: "privileges",
+    description: "Premium VIP access with exclusive benefits",
+    features: [
+      "3 daily kits with premium items",
+      "Queue bypass priority",
+      "Exclusive VIP chat access",
+      "Monthly subscriber rewards",
+      "Premium support"
+    ],
+    duration: "6 days",
+    popular: true,
+    discount: 15
+  },
+  {
+    id: 2,
+    name: "Premium Package",
+    price: 340,
+    category: "privileges",
+    description: "Advanced privileges for dedicated players",
+    features: [
+      "2 daily kits",
+      "Priority queue access",
+      "Special commands",
+      "Monthly rewards"
+    ],
+    duration: "6 days",
+    popular: false,
+    discount: 10
+  },
+  {
+    id: 3,
+    name: "Workbench Level 3",
+    price: 45,
+    category: "items",
+    description: "Advanced crafting station",
+    features: [
+      "Craft advanced items",
+      "Permanent access",
+      "Exclusive recipes",
+      "Instant deployment"
+    ],
+    duration: "Permanent",
+    popular: false,
+    discount: 0
+  },
+  {
+    id: 4,
+    name: "Blue Keycard",
+    price: 25,
+    category: "items",
+    description: "Access to restricted areas",
+    features: [
+      "Blue keycard access",
+      "Monument entry",
+      "Loot privileges",
+      "Instant delivery"
+    ],
+    duration: "1 use",
+    popular: false,
+    discount: 0
+  },
+  {
+    id: 5,
+    name: "AK-47 Assault Rifle",
+    price: 85,
+    category: "weapons",
+    description: "High-damage assault rifle",
+    features: [
+      "High damage output",
+      "Customizable attachments",
+      "Instant delivery",
+      "Ammunition included"
+    ],
+    duration: "Permanent",
+    popular: true,
+    discount: 20
+  },
+  {
+    id: 6,
+    name: "Bolt Action Rifle",
+    price: 120,
+    category: "weapons",
+    description: "Precision sniper rifle",
+    features: [
+      "Long-range precision",
+      "One-shot potential",
+      "Scope included",
+      "Instant delivery"
+    ],
+    duration: "Permanent",
+    popular: false,
+    discount: 0
+  },
+  {
+    id: 7,
+    name: "Heavy Plate Armor",
+    price: 65,
+    category: "armor",
+    description: "Maximum protection gear",
+    features: [
+      "Maximum protection",
+      "Durability bonus",
+      "Instant deployment",
+      "Repair kit included"
+    ],
+    duration: "Permanent",
+    popular: false,
+    discount: 0
+  },
+  {
+    id: 8,
+    name: "Tactical Gear Set",
+    price: 95,
+    category: "armor",
+    description: "Complete tactical equipment",
+    features: [
+      "Full armor set",
+      "Tactical advantages",
+      "Enhanced mobility",
+      "Instant deployment"
+    ],
+    duration: "Permanent",
+    popular: true,
+    discount: 15
+  }
+];
+
+// Данные серверов
+const servers = [
+  { id: 'red', name: 'Red', players: 14, maxPlayers: 200, status: 'online', ping: 45 },
+  { id: 'green', name: 'Green', players: 156, maxPlayers: 200, status: 'online', ping: 23 },
+  { id: 'yellow', name: 'Yellow', players: 89, maxPlayers: 200, status: 'online', ping: 67 },
+  { id: 'purple', name: 'Purple', players: 134, maxPlayers: 200, status: 'online', ping: 34 },
+  { id: 'blue', name: 'Blue', players: 178, maxPlayers: 200, status: 'online', ping: 56 },
+  { id: 'black', name: 'Black', players: 12, maxPlayers: 200, status: 'maintenance', ping: 999 }
+];
+
+const categories = [
+  { id: 'all', name: 'Все товары', icon: Package },
+  { id: 'privileges', name: 'Привилегии', icon: Crown },
+  { id: 'items', name: 'Предметы', icon: Package },
+  { id: 'weapons', name: 'Оружие', icon: Sword },
+  { id: 'armor', name: 'Броня', icon: Shield }
+];
+
+const bonusRates = [
+  { min: 500, max: 999, bonus: 10 },
+  { min: 1000, max: 2499, bonus: 20 },
+  { min: 2500, max: 4999, bonus: 30 },
+  { min: 5000, max: Infinity, bonus: 40 }
+];
 
 const App = () => {
   const [selectedServer, setSelectedServer] = useState('red');
@@ -40,165 +201,6 @@ const App = () => {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [showAdminPanel, setShowAdminPanel] = useState(false);
   const [allProducts, setAllProducts] = useState(products);
-
-  // Данные серверов
-  const servers = [
-    { id: 'red', name: 'Red', players: 14, maxPlayers: 200, status: 'online', ping: 45 },
-    { id: 'green', name: 'Green', players: 156, maxPlayers: 200, status: 'online', ping: 23 },
-    { id: 'yellow', name: 'Yellow', players: 89, maxPlayers: 200, status: 'online', ping: 67 },
-    { id: 'purple', name: 'Purple', players: 134, maxPlayers: 200, status: 'online', ping: 34 },
-    { id: 'blue', name: 'Blue', players: 178, maxPlayers: 200, status: 'online', ping: 56 },
-    { id: 'black', name: 'Black', players: 12, maxPlayers: 200, status: 'maintenance', ping: 999 }
-  ];
-
-  // Данные товаров
-  const products = [
-    {
-      id: 1,
-      name: "VIP Package",
-      price: 540,
-      category: "privileges",
-      description: "Premium VIP access with exclusive benefits",
-      features: [
-        "3 daily kits with premium items",
-        "Queue bypass priority",
-        "Exclusive VIP chat access",
-        "Monthly subscriber rewards",
-        "Premium support"
-      ],
-      duration: "6 days",
-      popular: true,
-      discount: 15
-    },
-    {
-      id: 2,
-      name: "Premium Package",
-      price: 340,
-      category: "privileges",
-      description: "Advanced privileges for dedicated players",
-      features: [
-        "2 daily kits",
-        "Priority queue access",
-        "Special commands",
-        "Monthly rewards"
-      ],
-      duration: "6 days",
-      popular: false,
-      discount: 10
-    },
-    {
-      id: 3,
-      name: "Workbench Level 3",
-      price: 45,
-      category: "items",
-      description: "Advanced crafting station",
-      features: [
-        "Craft advanced items",
-        "Permanent access",
-        "Exclusive recipes",
-        "Instant deployment"
-      ],
-      duration: "Permanent",
-      popular: false,
-      discount: 0
-    },
-    {
-      id: 4,
-      name: "Blue Keycard",
-      price: 25,
-      category: "items",
-      description: "Access to restricted areas",
-      features: [
-        "Blue keycard access",
-        "Monument entry",
-        "Loot privileges",
-        "Instant delivery"
-      ],
-      duration: "1 use",
-      popular: false,
-      discount: 0
-    },
-    {
-      id: 5,
-      name: "AK-47 Assault Rifle",
-      price: 85,
-      category: "weapons",
-      description: "High-damage assault rifle",
-      features: [
-        "High damage output",
-        "Customizable attachments",
-        "Instant delivery",
-        "Ammunition included"
-      ],
-      duration: "Permanent",
-      popular: true,
-      discount: 20
-    },
-    {
-      id: 6,
-      name: "Bolt Action Rifle",
-      price: 120,
-      category: "weapons",
-      description: "Precision sniper rifle",
-      features: [
-        "Long-range precision",
-        "One-shot potential",
-        "Scope included",
-        "Instant delivery"
-      ],
-      duration: "Permanent",
-      popular: false,
-      discount: 0
-    },
-    {
-      id: 7,
-      name: "Heavy Plate Armor",
-      price: 65,
-      category: "armor",
-      description: "Maximum protection gear",
-      features: [
-        "Maximum protection",
-        "Durability bonus",
-        "Instant deployment",
-        "Repair kit included"
-      ],
-      duration: "Permanent",
-      popular: false,
-      discount: 0
-    },
-    {
-      id: 8,
-      name: "Tactical Gear Set",
-      price: 95,
-      category: "armor",
-      description: "Complete tactical equipment",
-      features: [
-        "Full armor set",
-        "Tactical advantages",
-        "Enhanced mobility",
-        "Instant deployment"
-      ],
-      duration: "Permanent",
-      popular: true,
-      discount: 15
-    }
-  ];
-
-  const categories = [
-    { id: 'all', name: 'Все товары', icon: Package },
-    { id: 'privileges', name: 'Привилегии', icon: Crown },
-    { id: 'items', name: 'Предметы', icon: Package },
-    { id: 'weapons', name: 'Оружие', icon: Sword },
-    { id: 'armor', name: 'Броня', icon: Shield }
-  ];
-
-  const bonusRates = [
-    { min: 500, max: 999, bonus: 10 },
-    { min: 1000, max: 2499, bonus: 20 },
-    { min: 2500, max: 4999, bonus: 30 },
-    { min: 5000, max: Infinity, bonus: 40 }
-  ];
-
   const [activeCategory, setActiveCategory] = useState('all');
   const [filteredProducts, setFilteredProducts] = useState(products);
 

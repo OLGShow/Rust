@@ -4,8 +4,19 @@ import { cn } from '../../lib/utils'
 
 const DialogContext = createContext()
 
-const Dialog = ({ children, ...props }) => {
-  const [open, setOpen] = useState(false)
+const Dialog = ({ children, open: controlledOpen, onOpenChange, ...props }) => {
+  const [internalOpen, setInternalOpen] = useState(false)
+  
+  const isControlled = controlledOpen !== undefined
+  const open = isControlled ? controlledOpen : internalOpen
+  
+  const setOpen = (value) => {
+    if (isControlled) {
+      onOpenChange?.(value)
+    } else {
+      setInternalOpen(value)
+    }
+  }
   
   return (
     <DialogContext.Provider value={{ open, setOpen }}>

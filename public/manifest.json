@@ -1,7 +1,7 @@
 {
   "name": "RUST Store - Официальный магазин внутриигровых покупок",
   "short_name": "RUST Store",
-  "description": "Современный онлайн магазин для внутриигровых покупок в игре RUST. Оружие, броня, инструменты, ресурсы и скины с мгновенной доставкой на ваш игровой сервер.",
+  "description": "Современный онлайн магазин для внутриигровых покупок в игре RUST",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
@@ -12,102 +12,16 @@
   "dir": "ltr",
   "icons": [
     {
-      "src": "/icons/icon-72x72.png",
-      "sizes": "72x72",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/icons/icon-96x96.png",
-      "sizes": "96x96",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/icons/icon-128x128.png",
-      "sizes": "128x128",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/icons/icon-144x144.png",
-      "sizes": "144x144",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/icons/icon-152x152.png",
-      "sizes": "152x152",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/icons/icon-192x192.png",
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgZmlsbD0iI2Y1OWUwYiIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LXNpemU9IjgwIiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkE8L3RleHQ+PC9zdmc+",
       "sizes": "192x192",
-      "type": "image/png",
+      "type": "image/svg+xml",
       "purpose": "any maskable"
     },
     {
-      "src": "/icons/icon-384x384.png",
-      "sizes": "384x384",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/icons/icon-512x512.png",
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgZmlsbD0iI2Y1OWUwYiIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LXNpemU9IjIwMCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5BPC90ZXh0Pjwvc3ZnPg==",
       "sizes": "512x512",
-      "type": "image/png",
+      "type": "image/svg+xml",
       "purpose": "any maskable"
-    }
-  ],
-  "shortcuts": [
-    {
-      "name": "Каталог товаров",
-      "short_name": "Каталог",
-      "description": "Просмотр всех товаров",
-      "url": "/?category=all",
-      "icons": [
-        {
-          "src": "/icons/shortcut-catalog.png",
-          "sizes": "96x96"
-        }
-      ]
-    },
-    {
-      "name": "Мой профиль",
-      "short_name": "Профиль",
-      "description": "Профиль пользователя",
-      "url": "/?page=profile",
-      "icons": [
-        {
-          "src": "/icons/shortcut-profile.png",
-          "sizes": "96x96"
-        }
-      ]
-    },
-    {
-      "name": "Корзина",
-      "short_name": "Корзина",
-      "description": "Товары в корзине",
-      "url": "/?page=cart",
-      "icons": [
-        {
-          "src": "/icons/shortcut-cart.png",
-          "sizes": "96x96"
-        }
-      ]
-    },
-    {
-      "name": "Серверы",
-      "short_name": "Серверы",
-      "description": "Выбор игрового сервера",
-      "url": "/?page=servers",
-      "icons": [
-        {
-          "src": "/icons/shortcut-servers.png",
-          "sizes": "96x96"
-        }
-      ]
     }
   ],
   "categories": [
@@ -115,88 +29,10 @@
     "shopping",
     "entertainment"
   ],
-  "iarc_rating_id": "3f5c1b4d-6e7a-8b9c-0d1e-2f3g4h5i6j7k",
   "prefer_related_applications": false,
-  "edge_side_panel": {
-    "preferred_width": 400
-  },
-  "handle_links": "auto",
-  "launch_handler": {
-    "client_mode": "focus-existing"
-  },
-  "protocol_handlers": [
-    {
-      "protocol": "web+ruststore",
-      "url": "/?action=%s"
-    }
-  ],
-  "share_target": {
-    "action": "/share",
-    "method": "POST",
-    "enctype": "multipart/form-data",
-    "params": {
-      "title": "title",
-      "text": "text",
-      "url": "url",
-      "files": [
-        {
-          "name": "screenshot",
-          "accept": ["image/*"]
-        }
-      ]
-    }
-  },
-  "screenshots": [
-    {
-      "src": "/screenshots/desktop-home.png",
-      "sizes": "1280x720",
-      "type": "image/png",
-      "platform": "wide",
-      "label": "Главная страница RUST Store на десктопе"
-    },
-    {
-      "src": "/screenshots/mobile-catalog.png",
-      "sizes": "375x812",
-      "type": "image/png",
-      "platform": "narrow",
-      "label": "Каталог товаров на мобильном устройстве"
-    },
-    {
-      "src": "/screenshots/mobile-profile.png",
-      "sizes": "375x812",
-      "type": "image/png",
-      "platform": "narrow",
-      "label": "Профиль пользователя на мобильном"
-    },
-    {
-      "src": "/screenshots/desktop-admin.png",
-      "sizes": "1280x720",
-      "type": "image/png",
-      "platform": "wide",
-      "label": "Админ-панель на десктопе"
-    }
-  ],
   "display_override": [
-    "window-controls-overlay",
-    "minimal-ui",
     "standalone",
+    "minimal-ui",
     "browser"
-  ],
-  "file_handlers": [
-    {
-      "action": "/import",
-      "accept": {
-        "application/json": [".json"],
-        "text/csv": [".csv"]
-      },
-      "icons": [
-        {
-          "src": "/icons/file-handler.png",
-          "sizes": "256x256",
-          "type": "image/png"
-        }
-      ],
-      "launch_type": "single-client"
-    }
   ]
 } 
