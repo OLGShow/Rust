@@ -261,7 +261,7 @@ const App = () => {
   const isAdmin = steamUser?.steamId === '76561198000000000' || 
                   steamUser?.userInfo?.personaname === 'Admin';
 
-    const addToCart = (product) => {
+  const addToCart = (product) => {
     setCart(prev => {
       const existing = prev.find(item => item.id === product.id);
       if (existing) {
@@ -357,7 +357,7 @@ const App = () => {
               </div>
               <div>
                 <h1 className="text-2xl font-bold bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent">
-                  RUST Store
+                RUST Store
                 </h1>
                 <p className="text-gray-300 text-sm">Premium Gaming Experience</p>
               </div>
@@ -395,8 +395,8 @@ const App = () => {
                   
                   {/* Кнопка админ-панели */}
                   {isAdmin && (
-                    <Button
-                      variant="outline"
+                <Button 
+                  variant="outline" 
                       size="sm"
                       onClick={() => setShowAdminPanel(true)}
                       className="border-purple-500/30 text-purple-400 hover:bg-purple-500/10"
@@ -434,8 +434,8 @@ const App = () => {
                   <Badge className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1.5 py-0.5">
                     {getCartCount()}
                   </Badge>
-                )}
-              </Button>
+                  )}
+                </Button>
             </div>
           </div>
         </div>
@@ -460,11 +460,11 @@ const App = () => {
                   <div className="text-lg font-bold text-orange-400">+{rate.bonus}%</div>
                   <div className="text-sm text-gray-300">
                     от {rate.min}₽ {rate.max !== Infinity ? `до ${rate.max}₽` : 'и выше'}
-                  </div>
+            </div>
                 </CardContent>
               </Card>
-            ))}
-          </div>
+              ))}
+            </div>
         </div>
 
         {/* Server Selection */}
@@ -476,7 +476,7 @@ const App = () => {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
               {servers.map((server) => (
                 <Button
                   key={server.id}
@@ -501,21 +501,21 @@ const App = () => {
                   <div className={`w-4 h-4 rounded-full ${getServerColor(server.id)}`}></div>
                   <div className="text-sm font-medium">{server.name}</div>
                   <div className="text-xs text-gray-400">
-                    {server.players}/{server.maxPlayers}
-                  </div>
+                        {server.players}/{server.maxPlayers}
+                    </div>
                   <div className="text-xs">
                     {server.status === 'maintenance' ? 'Maintenance' : `${server.ping}ms`}
                   </div>
                 </Button>
-              ))}
-            </div>
+            ))}
+          </div>
             {selectedServer && (
               <div className="mt-4 p-4 bg-orange-500/10 border border-orange-500/20 rounded-lg">
                 <div className="flex items-center text-orange-400">
                   <CheckCircle className="h-4 w-4 mr-2" />
                   <span className="text-sm">
                     Привилегии будут активированы на сервере {servers.find(s => s.id === selectedServer)?.name}
-                  </span>
+              </span>
                 </div>
               </div>
             )}
@@ -529,7 +529,7 @@ const App = () => {
               const Icon = category.icon;
               return (
                 <TabsTrigger 
-                  key={category.id} 
+                key={category.id}
                   value={category.id}
                   className="flex items-center space-x-2 data-[state=active]:bg-orange-500 data-[state=active]:text-white"
                 >
@@ -546,7 +546,7 @@ const App = () => {
           rootMargin="100px"
           className="lazy-container"
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {filteredProducts.map((product) => {
             const Icon = getCategoryIcon(product.category);
             const discountedPrice = product.price * (1 - product.discount / 100);
@@ -557,27 +557,27 @@ const App = () => {
                   <div className="flex items-center justify-between">
                     <Icon className="h-8 w-8 text-orange-400" />
                     <div className="flex items-center space-x-2">
-                      {product.popular && (
+                  {product.popular && (
                         <Badge className="bg-gradient-to-r from-orange-500 to-red-500 text-white">
                           <TrendingUp className="h-3 w-3 mr-1" />
                           Popular
-                        </Badge>
+                      </Badge>
                       )}
                       {product.discount > 0 && (
                         <Badge className="bg-green-500 text-white">
-                          -{product.discount}%
-                        </Badge>
+                        -{product.discount}%
+                      </Badge>
                       )}
                     </div>
                   </div>
                   <CardTitle className="text-white group-hover:text-orange-400 transition-colors">
-                    {product.name}
-                  </CardTitle>
+                      {product.name}
+                    </CardTitle>
                   <p className="text-gray-400 text-sm">{product.description}</p>
-                </CardHeader>
+                  </CardHeader>
                 
                 <CardContent className="pt-0">
-                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center space-x-2">
                       {product.discount > 0 ? (
                         <>
@@ -591,27 +591,27 @@ const App = () => {
                     <Badge variant="outline" className="border-white/20 text-white">
                       {product.duration}
                     </Badge>
-                  </div>
-                  
+                    </div>
+                    
                   <div className="flex space-x-2">
-                    <Dialog>
-                      <DialogTrigger asChild>
+                      <Dialog>
+                        <DialogTrigger asChild>
                         <Button 
                           variant="outline" 
                           size="sm" 
                           className="flex-1 border-white/20 text-white hover:bg-white/10"
                           onClick={() => setSelectedProduct(product)}
                         >
-                          Подробнее
-                        </Button>
-                      </DialogTrigger>
+                              Подробнее
+                            </Button>
+                        </DialogTrigger>
                       <DialogContent className="bg-gray-900 border-white/20 text-white max-w-md">
-                        <DialogHeader>
+                          <DialogHeader>
                           <DialogTitle className="flex items-center space-x-2">
                             <Icon className="h-6 w-6 text-orange-400" />
                             <span>{product.name}</span>
-                          </DialogTitle>
-                        </DialogHeader>
+                            </DialogTitle>
+                          </DialogHeader>
                         <div className="space-y-4">
                           <p className="text-gray-300">{product.description}</p>
                           
@@ -623,9 +623,9 @@ const App = () => {
                                   <CheckCircle className="h-4 w-4 text-green-400 mr-2 flex-shrink-0" />
                                   {feature}
                                 </li>
-                              ))}
-                            </ul>
-                          </div>
+                                ))}
+                              </ul>
+                            </div>
                           
                           <div className="flex items-center justify-between p-4 bg-white/5 rounded-lg">
                             <div>
@@ -637,8 +637,8 @@ const App = () => {
                                 </div>
                               ) : (
                                 <div className="text-xl font-bold text-orange-400">{product.price}₽</div>
-                              )}
-                            </div>
+                                )}
+                              </div>
                             <div className="text-right">
                               <div className="text-sm text-gray-400">Длительность:</div>
                               <div className="text-sm font-medium">{product.duration}</div>
@@ -652,20 +652,20 @@ const App = () => {
                             <ShoppingCart className="h-4 w-4 mr-2" />
                             Добавить в корзину
                           </Button>
-                        </div>
-                      </DialogContent>
-                    </Dialog>
-                    
-                    <Button 
+                          </div>
+                        </DialogContent>
+                      </Dialog>
+                      
+                        <Button 
                       size="sm" 
                       className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white"
-                      onClick={() => addToCart(product)}
-                    >
+                          onClick={() => addToCart(product)}
+                        >
                       <ShoppingCart className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
+                        </Button>
+                    </div>
+                  </CardContent>
+                </Card>
             );
           })}
           </div>
@@ -743,11 +743,11 @@ const App = () => {
                         >
                           <Plus className="h-3 w-3" />
                         </Button>
-                      </div>
+                </div>
                       
                       <div className="text-right min-w-[60px]">
                         <div className="font-bold text-orange-400">{itemTotal.toFixed(0)}₽</div>
-                      </div>
+                </div>
                       
                       <Button
                         size="sm"
@@ -756,14 +756,14 @@ const App = () => {
                         onClick={() => removeFromCart(item.id)}
                       >
                         <X className="h-3 w-3" />
-                      </Button>
-                    </div>
-                  </div>
+                </Button>
+              </div>
+            </div>
                 );
               })
-            )}
-          </div>
-          
+        )}
+      </div>
+
           {cart.length > 0 && (
             <div className="border-t border-white/10 pt-4">
               <div className="space-y-2">
@@ -778,7 +778,7 @@ const App = () => {
                     <span>+{getBonusInfo(getCartTotal())}%</span>
                   </div>
                 )}
-              </div>
+          </div>
               
               <Button 
                 className="w-full mt-4 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white"
@@ -790,7 +790,7 @@ const App = () => {
                 <Zap className="h-4 w-4 mr-2" />
                 Оформить заказ
               </Button>
-            </div>
+        </div>
           )}
         </DialogContent>
       </Dialog>
