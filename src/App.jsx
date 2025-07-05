@@ -1,138 +1,256 @@
-import { useState, useEffect } from 'react'
-import { Button } from '@/components/ui/button.jsx'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card.jsx'
-import { Badge } from '@/components/ui/badge.jsx'
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog.jsx'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs.jsx'
-import { ShoppingCart, User, Package, Zap, Shield, Star, Clock, Gift, CheckCircle, Users, Server, TrendingUp, Gamepad2 } from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion'
-import './App.css'
+import React, { useState, useEffect } from 'react';
+import { 
+  ShoppingCart, 
+  Star, 
+  Users, 
+  Server, 
+  Shield, 
+  Sword, 
+  Package,
+  CheckCircle,
+  TrendingUp,
+  Gamepad2,
+  X,
+  Plus,
+  Minus,
+  Crown,
+  Zap,
+  Gift
+} from 'lucide-react';
+import { Button } from './components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from './components/ui/card';
+import { Badge } from './components/ui/badge';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from './components/ui/dialog';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from './components/ui/tabs';
+import './App.css';
 
-// Placeholder images for demonstration
-const rustItems = "https://images.unsplash.com/photo-1628348068343-c6a848d2d097?w=400&h=400&fit=crop"
-const rustItemList = "https://images.unsplash.com/photo-1556075798-4825dfaaf498?w=400&h=400&fit=crop"
+const App = () => {
+  const [selectedServer, setSelectedServer] = useState('red');
+  const [cart, setCart] = useState([]);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
-// Mock data for products
-const products = [
-  {
-    id: 1,
-    name: "VIP Package",
-    price: 540,
-    category: "privileges",
-    image: rustItems,
-    description: "Premium VIP access with exclusive benefits",
-    features: [
-      "3 daily kits - command /kit",
-      "2 additional teleport points",
-      "Queue bypass - instant entry",
-      "Pocket recycler",
-      "Trade cooldown 5 min",
-      "Prefixes and colors - command /chat",
-      "Participation in giveaways"
-    ],
-    duration: "6 days",
-    popular: true,
-    discount: 15
-  },
-  {
-    id: 2,
-    name: "Workbench Tier 1",
-    price: 60,
-    category: "items",
-    image: rustItemList,
-    description: "Essential crafting station for basic items",
-    features: ["Craft basic items", "Durable construction", "Easy placement"],
-    popular: false
-  },
-  {
-    id: 3,
-    name: "Workbench Tier 2",
-    price: 100,
-    category: "items",
-    image: rustItemList,
-    description: "Advanced crafting station for intermediate items",
-    features: ["Craft intermediate items", "Enhanced durability", "Faster crafting speed"],
-    popular: false
-  },
-  {
-    id: 4,
-    name: "Workbench Tier 3",
-    price: 180,
-    category: "items",
-    image: rustItemList,
-    description: "Top-tier crafting station for advanced items",
-    features: ["Craft advanced items", "Maximum durability", "Fastest crafting speed"],
-    popular: true
-  },
-  {
-    id: 5,
-    name: "Green Keycard",
-    price: 20,
-    category: "items",
-    image: rustItems,
-    description: "Access card for low-security areas",
-    features: ["Access to green puzzle rooms", "Single use", "Essential for progression"],
-    popular: false
-  },
-  {
-    id: 6,
-    name: "Red Keycard",
-    price: 60,
-    category: "items",
-    image: rustItems,
-    description: "Access card for high-security areas",
-    features: ["Access to red puzzle rooms", "Single use", "Highest tier access"],
-    popular: true
-  },
-  {
-    id: 7,
-    name: "Assault Rifle",
-    price: 100,
-    category: "weapons",
-    image: rustItemList,
-    description: "High-damage automatic weapon",
-    features: ["High damage output", "Automatic fire", "Medium range"],
-    popular: false
-  },
-  {
-    id: 8,
-    name: "Metal Armor Set",
-    price: 80,
-    category: "armor",
-    image: rustItems,
-    description: "Complete metal protection set",
-    features: ["High protection", "Durable materials", "Full body coverage"],
-    popular: false
-  }
-]
+  // Данные серверов
+  const servers = [
+    { id: 'red', name: 'Red', players: 14, maxPlayers: 200, status: 'online', ping: 45 },
+    { id: 'green', name: 'Green', players: 156, maxPlayers: 200, status: 'online', ping: 23 },
+    { id: 'yellow', name: 'Yellow', players: 89, maxPlayers: 200, status: 'online', ping: 67 },
+    { id: 'purple', name: 'Purple', players: 134, maxPlayers: 200, status: 'online', ping: 34 },
+    { id: 'blue', name: 'Blue', players: 178, maxPlayers: 200, status: 'online', ping: 56 },
+    { id: 'black', name: 'Black', players: 12, maxPlayers: 200, status: 'maintenance', ping: 999 }
+  ];
 
-const servers = [
-  { id: 'red', name: 'Red', players: 14, maxPlayers: 200, status: 'online', ping: 45 },
-  { id: 'green', name: 'Green', players: 3, maxPlayers: 200, status: 'online', ping: 32 },
-  { id: 'yellow', name: 'Yellow', players: 12, maxPlayers: 200, status: 'online', ping: 67 },
-  { id: 'purple', name: 'Purple', players: 18, maxPlayers: 200, status: 'online', ping: 28 },
-  { id: 'blue', name: 'Blue', players: 15, maxPlayers: 200, status: 'online', ping: 55 },
-  { id: 'black', name: 'Black', players: 8, maxPlayers: 200, status: 'online', ping: 72 }
-]
+  // Данные товаров
+  const products = [
+    {
+      id: 1,
+      name: "VIP Package",
+      price: 540,
+      category: "privileges",
+      description: "Premium VIP access with exclusive benefits",
+      features: [
+        "3 daily kits with premium items",
+        "Queue bypass priority",
+        "Exclusive VIP chat access",
+        "Monthly subscriber rewards",
+        "Premium support"
+      ],
+      duration: "6 days",
+      popular: true,
+      discount: 15
+    },
+    {
+      id: 2,
+      name: "Premium Package",
+      price: 340,
+      category: "privileges",
+      description: "Advanced privileges for dedicated players",
+      features: [
+        "2 daily kits",
+        "Priority queue access",
+        "Special commands",
+        "Monthly rewards"
+      ],
+      duration: "6 days",
+      popular: false,
+      discount: 10
+    },
+    {
+      id: 3,
+      name: "Workbench Level 3",
+      price: 45,
+      category: "items",
+      description: "Advanced crafting station",
+      features: [
+        "Craft advanced items",
+        "Permanent access",
+        "Exclusive recipes",
+        "Instant deployment"
+      ],
+      duration: "Permanent",
+      popular: false,
+      discount: 0
+    },
+    {
+      id: 4,
+      name: "Blue Keycard",
+      price: 25,
+      category: "items",
+      description: "Access to restricted areas",
+      features: [
+        "Blue keycard access",
+        "Monument entry",
+        "Loot privileges",
+        "Instant delivery"
+      ],
+      duration: "1 use",
+      popular: false,
+      discount: 0
+    },
+    {
+      id: 5,
+      name: "AK-47 Assault Rifle",
+      price: 85,
+      category: "weapons",
+      description: "High-damage assault rifle",
+      features: [
+        "High damage output",
+        "Customizable attachments",
+        "Instant delivery",
+        "Ammunition included"
+      ],
+      duration: "Permanent",
+      popular: true,
+      discount: 20
+    },
+    {
+      id: 6,
+      name: "Bolt Action Rifle",
+      price: 120,
+      category: "weapons",
+      description: "Precision sniper rifle",
+      features: [
+        "Long-range precision",
+        "One-shot potential",
+        "Scope included",
+        "Instant delivery"
+      ],
+      duration: "Permanent",
+      popular: false,
+      discount: 0
+    },
+    {
+      id: 7,
+      name: "Heavy Plate Armor",
+      price: 65,
+      category: "armor",
+      description: "Maximum protection gear",
+      features: [
+        "Maximum protection",
+        "Durability bonus",
+        "Instant deployment",
+        "Repair kit included"
+      ],
+      duration: "Permanent",
+      popular: false,
+      discount: 0
+    },
+    {
+      id: 8,
+      name: "Tactical Gear Set",
+      price: 95,
+      category: "armor",
+      description: "Complete tactical equipment",
+      features: [
+        "Full armor set",
+        "Tactical advantages",
+        "Enhanced mobility",
+        "Instant deployment"
+      ],
+      duration: "Permanent",
+      popular: true,
+      discount: 15
+    }
+  ];
 
-function App() {
-  const [selectedServer, setSelectedServer] = useState('red')
-  const [selectedCategory, setSelectedCategory] = useState('all')
-  const [cart, setCart] = useState([])
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+  const categories = [
+    { id: 'all', name: 'Все товары', icon: Package },
+    { id: 'privileges', name: 'Привилегии', icon: Crown },
+    { id: 'items', name: 'Предметы', icon: Package },
+    { id: 'weapons', name: 'Оружие', icon: Sword },
+    { id: 'armor', name: 'Броня', icon: Shield }
+  ];
 
-  const filteredProducts = selectedCategory === 'all' 
-    ? products 
-    : products.filter(product => product.category === selectedCategory)
+  const bonusRates = [
+    { min: 500, max: 999, bonus: 10 },
+    { min: 1000, max: 2499, bonus: 20 },
+    { min: 2500, max: 4999, bonus: 30 },
+    { min: 5000, max: Infinity, bonus: 40 }
+  ];
+
+  const [activeCategory, setActiveCategory] = useState('all');
+  const [filteredProducts, setFilteredProducts] = useState(products);
+
+  useEffect(() => {
+    if (activeCategory === 'all') {
+      setFilteredProducts(products);
+    } else {
+      setFilteredProducts(products.filter(product => product.category === activeCategory));
+    }
+  }, [activeCategory]);
 
   const addToCart = (product) => {
-    setCart(prev => [...prev, product])
-  }
+    setCart(prev => {
+      const existing = prev.find(item => item.id === product.id);
+      if (existing) {
+        return prev.map(item =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      }
+      return [...prev, { ...product, quantity: 1 }];
+    });
+  };
 
-  const getTotalPrice = () => {
-    return cart.reduce((total, item) => total + item.price, 0)
-  }
+  const removeFromCart = (productId) => {
+    setCart(prev => prev.filter(item => item.id !== productId));
+  };
+
+  const updateQuantity = (productId, newQuantity) => {
+    if (newQuantity === 0) {
+      removeFromCart(productId);
+      return;
+    }
+    setCart(prev =>
+      prev.map(item =>
+        item.id === productId
+          ? { ...item, quantity: newQuantity }
+          : item
+      )
+    );
+  };
+
+  const getCartTotal = () => {
+    return cart.reduce((total, item) => {
+      const discountedPrice = item.price * (1 - item.discount / 100);
+      return total + (discountedPrice * item.quantity);
+    }, 0);
+  };
+
+  const getCartCount = () => {
+    return cart.reduce((count, item) => count + item.quantity, 0);
+  };
+
+  const getBonusInfo = (total) => {
+    const bonusRate = bonusRates.find(rate => total >= rate.min && total <= rate.max);
+    return bonusRate ? bonusRate.bonus : 0;
+  };
+
+  const getCategoryIcon = (categoryId) => {
+    const category = categories.find(cat => cat.id === categoryId);
+    return category ? category.icon : Package;
+  };
 
   const getServerColor = (serverId) => {
     const colors = {
@@ -142,485 +260,400 @@ function App() {
       purple: 'bg-purple-500',
       blue: 'bg-blue-500',
       black: 'bg-gray-800'
-    }
-    return colors[serverId] || 'bg-gray-500'
-  }
-
-  const getServerGradient = (serverId) => {
-    const gradients = {
-      red: 'from-red-500/20 to-red-600/10',
-      green: 'from-green-500/20 to-green-600/10',
-      yellow: 'from-yellow-500/20 to-yellow-600/10',
-      purple: 'from-purple-500/20 to-purple-600/10',
-      blue: 'from-blue-500/20 to-blue-600/10',
-      black: 'from-gray-500/20 to-gray-600/10'
-    }
-    return gradients[serverId] || 'from-gray-500/20 to-gray-600/10'
-  }
-
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      setMousePosition({ x: e.clientX, y: e.clientY })
-    }
-    window.addEventListener('mousemove', handleMouseMove)
-    return () => window.removeEventListener('mousemove', handleMouseMove)
-  }, [])
+    };
+    return colors[serverId] || 'bg-gray-500';
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white relative overflow-hidden">
-      {/* Animated Background Elements */}
-      <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute top-10 left-10 w-72 h-72 bg-orange-500/5 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-10 right-10 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-purple-500/5 rounded-full blur-3xl animate-pulse delay-2000"></div>
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
+      {/* Animated Background */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-4 -right-4 w-72 h-72 bg-gradient-to-br from-orange-500/20 to-red-500/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute -bottom-4 -left-4 w-72 h-72 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
       </div>
 
       {/* Header */}
-      <header className="border-b border-gray-700/50 bg-black/30 backdrop-blur-xl sticky top-0 z-50 glassmorphism">
+      <header className="glass-effect border-b border-white/10 sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <motion.h1 
-                className="text-3xl font-bold bg-gradient-to-r from-orange-400 to-red-500 bg-clip-text text-transparent"
-                whileHover={{ scale: 1.05 }}
-                transition={{ type: "spring", stiffness: 300 }}
-              >
-                <Gamepad2 className="inline-block w-8 h-8 mr-2 text-orange-500" />
-                RUST Store
-              </motion.h1>
-              <nav className="hidden md:flex space-x-6">
-                <motion.a 
-                  href="#" 
-                  className="hover:text-orange-400 transition-colors flex items-center space-x-1"
-                  whileHover={{ y: -2 }}
-                >
-                  <Package className="w-4 h-4" />
-                  <span>Products</span>
-                </motion.a>
-                <motion.a 
-                  href="#" 
-                  className="hover:text-orange-400 transition-colors flex items-center space-x-1"
-                  whileHover={{ y: -2 }}
-                >
-                  <Server className="w-4 h-4" />
-                  <span>Servers</span>
-                </motion.a>
-                <motion.a 
-                  href="#" 
-                  className="hover:text-orange-400 transition-colors flex items-center space-x-1"
-                  whileHover={{ y: -2 }}
-                >
-                  <Users className="w-4 h-4" />
-                  <span>Contacts</span>
-                </motion.a>
-              </nav>
+              <div className="bg-gradient-to-r from-orange-500 to-red-500 p-2 rounded-xl">
+                <Gamepad2 className="h-8 w-8 text-white" />
+              </div>
+              <div>
+                <h1 className="text-2xl font-bold bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent">
+                  RUST Store
+                </h1>
+                <p className="text-gray-300 text-sm">Premium Gaming Experience</p>
+              </div>
             </div>
+            
             <div className="flex items-center space-x-4">
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button 
-                  variant="outline" 
-                  className="border-orange-500/50 bg-orange-500/10 backdrop-blur-sm text-orange-400 hover:bg-orange-500 hover:text-black transition-all duration-300"
-                  onClick={() => setIsAuthenticated(!isAuthenticated)}
-                >
-                  <User className="w-4 h-4 mr-2" />
-                  {isAuthenticated ? 'Logged In' : 'Login via Steam'}
-                </Button>
-              </motion.div>
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button variant="ghost" size="icon" className="relative bg-white/5 backdrop-blur-sm">
-                  <ShoppingCart className="w-5 h-5" />
-                  {cart.length > 0 && (
-                    <motion.div
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      className="absolute -top-2 -right-2"
-                    >
-                      <Badge className="bg-orange-500 text-black animate-pulse">
-                        {cart.length}
-                      </Badge>
-                    </motion.div>
-                  )}
-                </Button>
-              </motion.div>
+              <Button variant="outline" className="border-white/20 text-white hover:bg-white/10">
+                <Users className="h-4 w-4 mr-2" />
+                Войти через Steam
+              </Button>
+              
+              <Button 
+                variant="outline" 
+                className="border-white/20 text-white hover:bg-white/10 relative"
+                onClick={() => setIsCartOpen(true)}
+              >
+                <ShoppingCart className="h-4 w-4 mr-2" />
+                Корзина
+                {getCartCount() > 0 && (
+                  <Badge className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1.5 py-0.5">
+                    {getCartCount()}
+                  </Badge>
+                )}
+              </Button>
             </div>
           </div>
         </div>
       </header>
 
       {/* Hero Section */}
-      <section className="relative h-80 bg-gradient-to-r from-orange-600/20 to-red-600/20 flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/20 to-black/60"></div>
-        <div className="absolute inset-0 backdrop-blur-sm"></div>
-        
-        <motion.div 
-          className="relative z-10 text-center max-w-4xl mx-auto px-4"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          <motion.h2 
-            className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-orange-400 via-red-500 to-pink-500 bg-clip-text text-transparent"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-          >
-            Premium RUST Store
-          </motion.h2>
-          <motion.p 
-            className="text-xl md:text-2xl text-gray-300 mb-8"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-          >
-            Получите лучшие внутриигровые предметы и привилегии
-          </motion.p>
+      <section className="container mx-auto px-4 py-12">
+        <div className="text-center mb-12">
+          <h2 className="text-4xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-orange-400 via-red-400 to-pink-400 bg-clip-text text-transparent animate-gradient">
+            Премиум магазин RUST
+          </h2>
+          <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+            Получите преимущества в игре с нашими эксклюзивными товарами и привилегиями
+          </p>
           
-          <motion.div 
-            className="glassmorphism rounded-xl p-6 mb-8 bg-white/5 backdrop-blur-md border border-white/10"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6 }}
-          >
-            <div className="text-sm text-orange-400 mb-4 flex items-center justify-center space-x-2">
-              <TrendingUp className="w-4 h-4" />
-              <span>Бонусы при пополнении:</span>
-            </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {[
-                { amount: "500₽", bonus: "+10%" },
-                { amount: "1000₽", bonus: "+20%" },
-                { amount: "2000₽", bonus: "+30%" },
-                { amount: "5000₽", bonus: "+40%" }
-              ].map((item, idx) => (
-                <motion.div
-                  key={idx}
-                  className="glassmorphism rounded-lg p-3 bg-gradient-to-r from-orange-500/20 to-red-500/20 border border-orange-500/30"
-                  whileHover={{ scale: 1.05, y: -2 }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                >
-                  <div className="text-white font-semibold">от {item.amount}</div>
-                  <div className="text-orange-400 font-bold">{item.bonus}</div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        </motion.div>
-      </section>
+          {/* Bonus Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+            {bonusRates.map((rate, index) => (
+              <Card key={index} className="glass-effect border-white/10 hover:border-orange-500/30 transition-all duration-300 transform hover:scale-105">
+                <CardContent className="p-4 text-center">
+                  <Gift className="h-8 w-8 text-orange-400 mx-auto mb-2" />
+                  <div className="text-lg font-bold text-orange-400">+{rate.bonus}%</div>
+                  <div className="text-sm text-gray-300">
+                    от {rate.min}₽ {rate.max !== Infinity ? `до ${rate.max}₽` : 'и выше'}
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
 
-      <div className="container mx-auto px-4 py-8">
         {/* Server Selection */}
-        <motion.div 
-          className="mb-8"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8 }}
-        >
-          <h3 className="text-2xl font-bold mb-6 flex items-center space-x-2">
-            <Server className="w-6 h-6 text-orange-500" />
-            <span>Выберите сервер:</span>
-          </h3>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {servers.map(server => (
-              <motion.div
-                key={server.id}
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ type: "spring", stiffness: 300 }}
-              >
+        <Card className="glass-effect border-white/10 mb-8">
+          <CardHeader>
+            <CardTitle className="flex items-center text-white">
+              <Server className="h-5 w-5 mr-2" />
+              Выберите сервер
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+              {servers.map((server) => (
                 <Button
+                  key={server.id}
                   variant={selectedServer === server.id ? "default" : "outline"}
-                  className={`w-full h-auto p-4 glassmorphism border-2 transition-all duration-300 ${
+                  className={`p-4 h-auto flex flex-col items-center space-y-2 ${
                     selectedServer === server.id 
-                      ? `${getServerColor(server.id)} border-white/30 shadow-lg` 
-                      : 'border-gray-600/50 bg-white/5 backdrop-blur-md hover:border-orange-500/50'
+                      ? 'bg-orange-500 text-white' 
+                      : 'border-white/20 text-white hover:bg-white/10'
                   }`}
                   onClick={() => setSelectedServer(server.id)}
+                  disabled={server.status === 'maintenance'}
                 >
-                  <div className="flex flex-col items-center space-y-2">
-                    <div className="font-bold text-lg">{server.name}</div>
-                    <div className="flex items-center space-x-2 text-xs">
-                      <Badge variant="secondary" className="bg-green-500/20 text-green-400">
-                        {server.players}/{server.maxPlayers}
-                      </Badge>
-                      <Badge variant="outline" className="border-gray-500/50 text-gray-400">
-                        {server.ping}ms
-                      </Badge>
-                    </div>
+                  <div className={`w-4 h-4 rounded-full ${getServerColor(server.id)}`}></div>
+                  <div className="text-sm font-medium">{server.name}</div>
+                  <div className="text-xs text-gray-400">
+                    {server.players}/{server.maxPlayers}
+                  </div>
+                  <div className="text-xs">
+                    {server.status === 'maintenance' ? 'Maintenance' : `${server.ping}ms`}
                   </div>
                 </Button>
-              </motion.div>
-            ))}
-          </div>
-          <motion.div 
-            className="mt-6 p-4 glassmorphism bg-yellow-900/20 backdrop-blur-md border border-yellow-600/30 rounded-lg"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 1 }}
-          >
-            <p className="text-yellow-400 text-sm flex items-start space-x-2">
-              <Shield className="w-4 h-4 mt-0.5 flex-shrink-0" />
-              <span>
-                ⚠️ Внимание! Перед покупкой привилегий необходимо выбрать сервер, на котором вы играете. 
-                Помните, что купленная привилегия будет активирована на выбранном сервере сразу после покупки.
-              </span>
-            </p>
-          </motion.div>
-        </motion.div>
+              ))}
+            </div>
+            {selectedServer && (
+              <div className="mt-4 p-4 bg-orange-500/10 border border-orange-500/20 rounded-lg">
+                <div className="flex items-center text-orange-400">
+                  <CheckCircle className="h-4 w-4 mr-2" />
+                  <span className="text-sm">
+                    Привилегии будут активированы на сервере {servers.find(s => s.id === selectedServer)?.name}
+                  </span>
+                </div>
+              </div>
+            )}
+          </CardContent>
+        </Card>
 
         {/* Category Tabs */}
-        <motion.div 
-          className="mb-8"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1 }}
-        >
-          <div className="flex flex-wrap gap-3 mb-6">
-            {[
-              { id: 'all', name: 'Все', icon: Package },
-              { id: 'privileges', name: 'Привилегии', icon: Star },
-              { id: 'items', name: 'Предметы', icon: Package },
-              { id: 'weapons', name: 'Оружие', icon: Zap },
-              { id: 'armor', name: 'Броня', icon: Shield }
-            ].map(category => (
-              <motion.div
-                key={category.id}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Button
-                  variant={selectedCategory === category.id ? "default" : "outline"}
-                  className={`glassmorphism border-2 transition-all duration-300 ${
-                    selectedCategory === category.id 
-                      ? 'bg-orange-500 text-black border-orange-400 shadow-lg' 
-                      : 'border-gray-600/50 bg-white/5 backdrop-blur-md text-white hover:border-orange-500/50'
-                  }`}
-                  onClick={() => setSelectedCategory(category.id)}
+        <Tabs value={activeCategory} onValueChange={setActiveCategory} className="mb-8">
+          <TabsList className="grid w-full grid-cols-5 bg-white/5 border border-white/10">
+            {categories.map((category) => {
+              const Icon = category.icon;
+              return (
+                <TabsTrigger 
+                  key={category.id} 
+                  value={category.id}
+                  className="flex items-center space-x-2 data-[state=active]:bg-orange-500 data-[state=active]:text-white"
                 >
-                  <category.icon className="w-4 h-4 mr-2" />
-                  {category.name}
-                </Button>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
+                  <Icon className="h-4 w-4" />
+                  <span className="hidden sm:inline">{category.name}</span>
+                </TabsTrigger>
+              );
+            })}
+          </TabsList>
+        </Tabs>
 
         {/* Products Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          <AnimatePresence mode="wait">
-            {filteredProducts.map((product, index) => (
-              <motion.div
-                key={product.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ y: -5 }}
-              >
-                <Card className="glassmorphism bg-gray-800/30 backdrop-blur-md border-gray-700/50 hover:border-orange-500/50 transition-all duration-300 group relative overflow-hidden">
-                  {product.popular && (
-                    <motion.div
-                      className="absolute top-2 right-2 z-10"
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      transition={{ delay: 0.5 }}
-                    >
-                      <Badge className="bg-gradient-to-r from-orange-500 to-red-500 text-black font-bold">
-                        <TrendingUp className="w-3 h-3 mr-1" />
-                        Популярный
-                      </Badge>
-                    </motion.div>
-                  )}
-                  {product.discount && (
-                    <motion.div
-                      className="absolute top-2 left-2 z-10"
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      transition={{ delay: 0.7 }}
-                    >
-                      <Badge className="bg-gradient-to-r from-green-500 to-blue-500 text-black font-bold">
-                        -{product.discount}%
-                      </Badge>
-                    </motion.div>
-                  )}
-                  <CardHeader className="pb-2">
-                    <div className="aspect-square bg-gradient-to-br from-gray-700 to-gray-800 rounded-lg mb-3 overflow-hidden relative">
-                      <motion.img 
-                        src={product.image} 
-                        alt={product.name}
-                        className="w-full h-full object-cover transition-transform duration-500"
-                        whileHover={{ scale: 1.1 }}
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    </div>
-                    <CardTitle className="text-lg group-hover:text-orange-400 transition-colors">
-                      {product.name}
-                    </CardTitle>
-                    <CardDescription className="text-gray-400">
-                      {product.description}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="flex flex-col">
-                        <span className="text-2xl font-bold text-orange-500">
-                          {product.price} RUB
-                        </span>
-                        {product.discount && (
-                          <span className="text-sm text-gray-500 line-through">
-                            {Math.round(product.price * (1 + product.discount / 100))} RUB
-                          </span>
-                        )}
-                      </div>
-                      {product.category === 'privileges' && (
-                        <Badge variant="secondary" className="bg-purple-600/20 text-purple-400 border-purple-500/30">
-                          <Clock className="w-3 h-3 mr-1" />
-                          {product.duration}
+          {filteredProducts.map((product) => {
+            const Icon = getCategoryIcon(product.category);
+            const discountedPrice = product.price * (1 - product.discount / 100);
+            
+            return (
+              <Card key={product.id} className="glass-effect border-white/10 hover:border-orange-500/30 transition-all duration-300 transform hover:scale-105 hover:shadow-2xl group">
+                <CardHeader className="pb-4">
+                  <div className="flex items-center justify-between">
+                    <Icon className="h-8 w-8 text-orange-400" />
+                    <div className="flex items-center space-x-2">
+                      {product.popular && (
+                        <Badge className="bg-gradient-to-r from-orange-500 to-red-500 text-white">
+                          <TrendingUp className="h-3 w-3 mr-1" />
+                          Popular
+                        </Badge>
+                      )}
+                      {product.discount > 0 && (
+                        <Badge className="bg-green-500 text-white">
+                          -{product.discount}%
                         </Badge>
                       )}
                     </div>
-                    
-                    <div className="space-y-2">
-                      <Dialog>
-                        <DialogTrigger asChild>
-                          <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                            <Button variant="outline" className="w-full glassmorphism border-orange-500/50 bg-orange-500/10 text-orange-400 hover:bg-orange-500 hover:text-black transition-all duration-300">
-                              <Package className="w-4 h-4 mr-2" />
-                              Подробнее
-                            </Button>
-                          </motion.div>
-                        </DialogTrigger>
-                        <DialogContent className="glassmorphism bg-gray-900/90 backdrop-blur-xl border-gray-700/50 text-white max-w-md">
-                          <DialogHeader>
-                            <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-orange-400 to-red-500 bg-clip-text text-transparent">
-                              {product.name}
-                            </DialogTitle>
-                            <DialogDescription className="text-gray-400 text-base">
-                              {product.description}
-                            </DialogDescription>
-                          </DialogHeader>
-                          <div className="space-y-6">
-                            <div className="aspect-video bg-gradient-to-br from-gray-700 to-gray-800 rounded-lg overflow-hidden">
-                              <img 
-                                src={product.image} 
-                                alt={product.name}
-                                className="w-full h-full object-cover"
-                              />
-                            </div>
-                            <div className="glassmorphism bg-white/5 backdrop-blur-md border border-white/10 rounded-lg p-4">
-                              <h4 className="font-semibold mb-3 text-orange-400 flex items-center space-x-2">
-                                <Gift className="w-4 h-4" />
-                                <span>Содержимое пакета:</span>
-                              </h4>
-                              <ul className="space-y-2 text-sm">
-                                {product.features.map((feature, idx) => (
-                                  <motion.li 
-                                    key={idx} 
-                                    className="flex items-center space-x-2"
-                                    initial={{ opacity: 0, x: -10 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    transition={{ delay: idx * 0.1 }}
-                                  >
-                                    <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" />
-                                    <span>{feature}</span>
-                                  </motion.li>
-                                ))}
-                              </ul>
-                            </div>
-                            <div className="flex items-center justify-between pt-4 border-t border-gray-700/50">
-                              <div className="flex flex-col">
-                                <span className="text-2xl font-bold text-orange-500">
-                                  {product.price} RUB
-                                </span>
-                                {product.discount && (
-                                  <span className="text-sm text-gray-500 line-through">
-                                    {Math.round(product.price * (1 + product.discount / 100))} RUB
-                                  </span>
-                                )}
-                              </div>
-                              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                                <Button 
-                                  className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-bold shadow-lg"
-                                  onClick={() => addToCart(product)}
-                                >
-                                  <ShoppingCart className="w-4 h-4 mr-2" />
-                                  Купить сейчас
-                                </Button>
-                              </motion.div>
-                            </div>
-                            <p className="text-xs text-yellow-400 text-center glassmorphism bg-yellow-900/20 border border-yellow-600/30 rounded-lg p-3">
-                              <Shield className="w-4 h-4 inline mr-1" />
-                              ⚠️ Активация на выбранном сервере сразу после покупки!
-                            </p>
-                          </div>
-                        </DialogContent>
-                      </Dialog>
-                      
-                      <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                        <Button 
-                          className="w-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-bold shadow-lg"
-                          onClick={() => addToCart(product)}
-                        >
-                          <ShoppingCart className="w-4 h-4 mr-2" />
-                          В корзину
-                        </Button>
-                      </motion.div>
+                  </div>
+                  <CardTitle className="text-white group-hover:text-orange-400 transition-colors">
+                    {product.name}
+                  </CardTitle>
+                  <p className="text-gray-400 text-sm">{product.description}</p>
+                </CardHeader>
+                
+                <CardContent className="pt-0">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center space-x-2">
+                      {product.discount > 0 ? (
+                        <>
+                          <span className="text-2xl font-bold text-orange-400">{discountedPrice}₽</span>
+                          <span className="text-lg text-gray-500 line-through">{product.price}₽</span>
+                        </>
+                      ) : (
+                        <span className="text-2xl font-bold text-orange-400">{product.price}₽</span>
+                      )}
                     </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </AnimatePresence>
+                    <Badge variant="outline" className="border-white/20 text-white">
+                      {product.duration}
+                    </Badge>
+                  </div>
+                  
+                  <div className="flex space-x-2">
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <Button 
+                          variant="outline" 
+                          size="sm" 
+                          className="flex-1 border-white/20 text-white hover:bg-white/10"
+                          onClick={() => setSelectedProduct(product)}
+                        >
+                          Подробнее
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent className="bg-gray-900 border-white/20 text-white max-w-md">
+                        <DialogHeader>
+                          <DialogTitle className="flex items-center space-x-2">
+                            <Icon className="h-6 w-6 text-orange-400" />
+                            <span>{product.name}</span>
+                          </DialogTitle>
+                        </DialogHeader>
+                        <div className="space-y-4">
+                          <p className="text-gray-300">{product.description}</p>
+                          
+                          <div>
+                            <h4 className="font-semibold mb-2">Что включено:</h4>
+                            <ul className="space-y-1">
+                              {product.features.map((feature, index) => (
+                                <li key={index} className="flex items-center text-sm text-gray-300">
+                                  <CheckCircle className="h-4 w-4 text-green-400 mr-2 flex-shrink-0" />
+                                  {feature}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                          
+                          <div className="flex items-center justify-between p-4 bg-white/5 rounded-lg">
+                            <div>
+                              <div className="text-sm text-gray-400">Цена:</div>
+                              {product.discount > 0 ? (
+                                <div className="flex items-center space-x-2">
+                                  <span className="text-xl font-bold text-orange-400">{discountedPrice}₽</span>
+                                  <span className="text-sm text-gray-500 line-through">{product.price}₽</span>
+                                </div>
+                              ) : (
+                                <div className="text-xl font-bold text-orange-400">{product.price}₽</div>
+                              )}
+                            </div>
+                            <div className="text-right">
+                              <div className="text-sm text-gray-400">Длительность:</div>
+                              <div className="text-sm font-medium">{product.duration}</div>
+                            </div>
+                          </div>
+                          
+                          <Button 
+                            className="w-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600"
+                            onClick={() => addToCart(product)}
+                          >
+                            <ShoppingCart className="h-4 w-4 mr-2" />
+                            Добавить в корзину
+                          </Button>
+                        </div>
+                      </DialogContent>
+                    </Dialog>
+                    
+                    <Button 
+                      size="sm" 
+                      className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white"
+                      onClick={() => addToCart(product)}
+                    >
+                      <ShoppingCart className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
+      </section>
 
-        {/* Show message when no products match filter */}
-        {filteredProducts.length === 0 && (
-          <motion.div 
-            className="text-center py-12"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+      {/* Floating Cart */}
+      {getCartCount() > 0 && (
+        <div className="fixed bottom-4 right-4 z-50">
+          <Button
+            className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white shadow-lg rounded-full h-16 w-16 p-0 animate-pulse"
+            onClick={() => setIsCartOpen(true)}
           >
-            <p className="text-gray-400 text-lg">Товары в данной категории не найдены.</p>
-          </motion.div>
-        )}
-
-        {/* Cart Summary */}
-        {cart.length > 0 && (
-          <motion.div
-            className="fixed bottom-4 right-4 z-50"
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ type: "spring", stiffness: 300 }}
-          >
-            <div className="glassmorphism bg-gray-900/90 backdrop-blur-xl border border-gray-700/50 rounded-lg p-4 shadow-2xl">
-              <div className="flex items-center space-x-4">
-                <div className="flex items-center space-x-2">
-                  <ShoppingCart className="w-5 h-5 text-orange-500" />
-                  <span className="font-semibold">{cart.length} товаров</span>
-                </div>
-                <div className="text-xl font-bold text-orange-500">
-                  {getTotalPrice()} RUB
-                </div>
-                <Button className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-bold">
-                  Оформить заказ
-                </Button>
-              </div>
+            <div className="text-center">
+              <ShoppingCart className="h-6 w-6 mx-auto" />
+              <div className="text-xs">{getCartTotal().toFixed(0)}₽</div>
             </div>
-          </motion.div>
-        )}
-      </div>
-
-      {/* Footer */}
-      <footer className="glassmorphism bg-black/30 backdrop-blur-xl border-t border-gray-700/50 mt-16">
-        <div className="container mx-auto px-4 py-8">
-          <div className="text-center text-gray-400 text-sm">
-            <p>Информация, размещенная на данном сайте, носит информационный характер и ни при каких условиях не является публичной офертой, определяемой положениями части 2 статьи 437 Гражданского кодекса Российской Федерации.</p>
-            <p className="mt-2">© 2025 RUST Store. Все права защищены.</p>
-          </div>
+          </Button>
         </div>
-      </footer>
-    </div>
-  )
-}
+      )}
 
-export default App
+      {/* Cart Dialog */}
+      <Dialog open={isCartOpen} onOpenChange={setIsCartOpen}>
+        <DialogContent className="bg-gray-900 border-white/20 text-white max-w-2xl">
+          <DialogHeader>
+            <DialogTitle className="flex items-center space-x-2">
+              <ShoppingCart className="h-6 w-6" />
+              <span>Корзина ({getCartCount()})</span>
+            </DialogTitle>
+          </DialogHeader>
+          
+          <div className="space-y-4 max-h-96 overflow-y-auto">
+            {cart.length === 0 ? (
+              <div className="text-center py-8 text-gray-400">
+                Корзина пуста
+              </div>
+            ) : (
+              cart.map((item) => {
+                const discountedPrice = item.price * (1 - item.discount / 100);
+                const itemTotal = discountedPrice * item.quantity;
+                
+                return (
+                  <div key={item.id} className="flex items-center justify-between p-4 bg-white/5 rounded-lg">
+                    <div className="flex-1">
+                      <h4 className="font-medium">{item.name}</h4>
+                      <p className="text-sm text-gray-400">{item.description}</p>
+                      <div className="flex items-center space-x-2 mt-2">
+                        {item.discount > 0 ? (
+                          <>
+                            <span className="text-orange-400 font-bold">{discountedPrice}₽</span>
+                            <span className="text-gray-500 line-through text-sm">{item.price}₽</span>
+                          </>
+                        ) : (
+                          <span className="text-orange-400 font-bold">{item.price}₽</span>
+                        )}
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center space-x-2">
+                      <div className="flex items-center space-x-2 bg-white/10 rounded-lg p-1">
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="h-6 w-6 p-0 hover:bg-white/20"
+                          onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                        >
+                          <Minus className="h-3 w-3" />
+                        </Button>
+                        <span className="px-2 text-sm">{item.quantity}</span>
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="h-6 w-6 p-0 hover:bg-white/20"
+                          onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                        >
+                          <Plus className="h-3 w-3" />
+                        </Button>
+                      </div>
+                      
+                      <div className="text-right min-w-[60px]">
+                        <div className="font-bold text-orange-400">{itemTotal.toFixed(0)}₽</div>
+                      </div>
+                      
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        className="h-6 w-6 p-0 hover:bg-red-500/20 hover:text-red-400"
+                        onClick={() => removeFromCart(item.id)}
+                      >
+                        <X className="h-3 w-3" />
+                      </Button>
+                    </div>
+                  </div>
+                );
+              })
+            )}
+          </div>
+          
+          {cart.length > 0 && (
+            <div className="border-t border-white/10 pt-4">
+              <div className="space-y-2">
+                <div className="flex justify-between text-lg">
+                  <span>Итого:</span>
+                  <span className="font-bold text-orange-400">{getCartTotal().toFixed(0)}₽</span>
+                </div>
+                
+                {getBonusInfo(getCartTotal()) > 0 && (
+                  <div className="flex justify-between text-sm text-green-400">
+                    <span>Бонус при пополнении:</span>
+                    <span>+{getBonusInfo(getCartTotal())}%</span>
+                  </div>
+                )}
+              </div>
+              
+              <Button 
+                className="w-full mt-4 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white"
+                onClick={() => {
+                  // Здесь будет логика оформления заказа
+                  alert('Функция оформления заказа будет реализована в следующей версии');
+                }}
+              >
+                <Zap className="h-4 w-4 mr-2" />
+                Оформить заказ
+              </Button>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
+    </div>
+  );
+};
+
+export default App;
 
