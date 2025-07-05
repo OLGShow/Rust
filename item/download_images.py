@@ -1,0 +1,165 @@
+import json
+import requests
+import os
+
+def download_image(url, filename, save_dir):
+    try:
+        response = requests.get(url, stream=True)
+        response.raise_for_status()
+        filepath = os.path.join(save_dir, filename)
+        with open(filepath, 'wb') as f:
+            for chunk in response.iter_content(chunk_size=8192):
+                f.write(chunk)
+        print(f"Downloaded {filename}")
+    except requests.exceptions.RequestException as e:
+        print(f"Error downloading {url}: {e}")
+
+# Assuming image_urls_data is passed from the browser console
+image_urls_data = [
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/workbench1.png", "parentText": "60 RUB\nВерстак 1-го уровня"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/workbench2.png", "parentText": "100 RUB\nВерстак 2-го уровня"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/workbench3.png", "parentText": "180 RUB\nВерстак 3-го уровня"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/keycard_green.png", "parentText": "20 RUB\nЗеленая карта доступа"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/keycard_blue.png", "parentText": "40 RUB\nСиняя карта доступа"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/keycard_red.png", "parentText": "60 RUB\nКрасная карта доступа"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/fuse.png", "parentText": "20 RUB\nЭлектрический предохранитель"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/coffin.png", "parentText": "30 RUB\nx3\nГроб"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/explosive.timed.png", "parentText": "200 RUB\n180 RUB\nx4\n-10%\nВзрывчатка с таймером"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/ammo.rocket.basic.png", "parentText": "120 RUB\nx4\nРакета"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/ammo.rocket.fire.png", "parentText": "80 RUB\nx4\nЗажигательная ракета"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/ammo.rocket.hv.png", "parentText": "60 RUB\nx4\nСкоростная ракета"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/ammo.rifle.explosive.png", "parentText": "150 RUB\nx256\n5,56-мм разрывной патрон"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/ammo.rifle.png", "parentText": "20 RUB\nx128\n5,56-мм патрон"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/ammo.pistol.png", "parentText": "15 RUB\nx128\nПистолетный патрон"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/explosive.satchel.png", "parentText": "80 RUB\nx4\nСумка с зарядом"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/beancan_grenade.png", "parentText": "40 RUB\nx10\nГраната из банки бобов"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/ammo.grenadelauncher.he.png", "parentText": "60 RUB\nx6\n40-мм фугасная граната"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/ammo.rocket.mlrs.png", "parentText": "50 RUB\nРакета РСЗО"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/mlrs.aimingmodule.png", "parentText": "60 RUB\nМодуль целеуказания РСЗО"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/grenade.f1.png", "parentText": "100 RUB\nСигнальная граната"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/rocket.launcher.png", "parentText": "140 RUB\nРакетница"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/grenadelauncher.mgl.png", "parentText": "100 RUB\nМногозарядный гранатомет"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/lmg.m249.png", "parentText": "120 RUB\nПулемет М249"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/lmg.homemade.png", "parentText": "100 RUB\nHMLMG"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/rifle.l96.png", "parentText": "100 RUB\nВинтовка L96"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/rifle.ak.png", "parentText": "80 RUB\nШтурмовая винтовка"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/rifle.lr300.png", "parentText": "80 RUB\nШтурмовая винтовка LR-300"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/smg.mp5.png", "parentText": "60 RUB\nMP5A4"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/rifle.m39.png", "parentText": "50 RUB\nВинтовка M39"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/pistol.m92.png", "parentText": "40 RUB\nМ92 Беретта"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/shotgun.double.png", "parentText": "20 RUB\nДвуствольный дробовик"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/scope.16x.png", "parentText": "30 RUB\nПрицел 16х"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/scope.8x.png", "parentText": "20 RUB\nПрицел 8х"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/metal.facemask.png", "parentText": "30 RUB\nЖелезная маска"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/metal.plate.torso.png", "parentText": "30 RUB\nМеталлический нагрудник"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/roadsign.kilt.png", "parentText": "20 RUB\nКилт из дорожных знаков"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/hazmatsuit.png", "parentText": "20 RUB\nАнтирадиационный костюм"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/scrap.png", "parentText": "50 RUB\nx100\nМеталлолом"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/wood.png", "parentText": "25 RUB\nx5000\nДерево"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/stones.png", "parentText": "25 RUB\nx5000\nКамни"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/metal.fragments.png", "parentText": "50 RUB\nx5000\nФрагменты металла"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/metal.refined.png", "parentText": "50 RUB\nx50\nМеталл высокого качества"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/charcoal.png", "parentText": "30 RUB\nx5000\nУголь"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/sulfur.png", "parentText": "50 RUB\nx2000\nСера"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/gunpowder.png", "parentText": "80 RUB\nx2000\nПорох"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/explosives.png", "parentText": "50 RUB\nx25\nExplosives"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/diesel.png", "parentText": "40 RUB\nx2\nДизельное топливо"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/lowgradefuel.png", "parentText": "40 RUB\nx500\nТопливо низкого качества"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/cloth.png", "parentText": "40 RUB\nx1000\nТкань"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/leather.png", "parentText": "40 RUB\nx1000\nКожа"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/cctv.camera.png", "parentText": "40 RUB\nКамера видеонаблюдения"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/targeting.computer.png", "parentText": "40 RUB\nКомпьютер наведения"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/gears.png", "parentText": "30 RUB\nx5\nШестерни"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/techparts.png", "parentText": "40 RUB\nx5\nСтарые микросхемы"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/metal.pipe.png", "parentText": "30 RUB\nx5\nМеталлическая труба"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/riflebody.png", "parentText": "40 RUB\nКорпус винтовки"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/smgbody.png", "parentText": "30 RUB\nКорпус пистолет-пулемета"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/semibody.png", "parentText": "20 RUB\nКорпус полуавтомата"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/metal.spring.png", "parentText": "30 RUB\nx3\nМеталлическая пружина"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/sewingkit.png", "parentText": "20 RUB\nx4\nНабор для шитья"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/rope.png", "parentText": "15 RUB\nx4\nВеревка"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/tarp.png", "parentText": "15 RUB\nx4\nБрезент"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/door.hinged.toptier.png", "parentText": "60 RUB\nБронированная дверь"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/door.double.hinged.toptier.png", "parentText": "60 RUB\nДвойная бронированная дверь"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/floor.ladder.hatch.png", "parentText": "30 RUB\nЛестничный люк"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/gates.external.high.stone.png", "parentText": "30 RUB\nВысокие внешние каменные ворота"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/wall.external.high.stone.png", "parentText": "50 RUB\nx5\nВысокая внешняя каменная стена"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/gates.external.high.wood.png", "parentText": "20 RUB\nВысокие внешние деревянные ворота"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/wall.external.high.wood.png", "parentText": "25 RUB\nx5\nВысокая внешняя деревянная стена"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/wood_ladder_short.png", "parentText": "20 RUB\nx2\nДеревянная лестница"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/barricade.metal.png", "parentText": "10 RUB\nx5\nМеталлическая баррикада"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/small.oil.refinery.png", "parentText": "30 RUB\nМалый НПЗ"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/furnace.large.png", "parentText": "40 RUB\nБольшая печь"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/hatchet.png", "parentText": "10 RUB\nТопор"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/pickaxe.png", "parentText": "10 RUB\nКирка"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/icepick.salvaged.png", "parentText": "20 RUB\nСамодельный ледоруб"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/jackhammer.png", "parentText": "50 RUB\nОтбойный молоток"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/syringe.medical.png", "parentText": "10 RUB\nx4\nМедицинский шприц"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/largemedkit.png", "parentText": "10 RUB\nx3\nБольшая аптечка"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/blueberries.png", "parentText": "10 RUB\nx3\nЧерника"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/sam_site.png", "parentText": "30 RUB\nЗенитная турель"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/autoturret.png", "parentText": "40 RUB\nАвтоматическая турель"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/wire.png", "parentText": "20 RUB\nx2\nПровод"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/small.generator.png", "parentText": "20 RUB\nМалый генератор"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/large.solar.panel.png", "parentText": "20 RUB\nx2\nБольшая солнечная панель"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/wind.turbine.png", "parentText": "30 RUB\nВетрогенератор"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/large.battery.png", "parentText": "20 RUB\nБольшой аккумулятор"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/electrical.splitter.png", "parentText": "10 RUB\nx2\nРазветвитель"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/electrical.switch.png", "parentText": "10 RUB\nПереключатель"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/electrical.combiner.png", "parentText": "10 RUB\nx2\nКомбинатор питания"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/electrical.branch.png", "parentText": "10 RUB\nЭлектрический разветвитель"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/floor.grill.png", "parentText": "20 RUB\nРешетчатый настил"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/explosives.png", "parentText": "100 RUB\nExplosives"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/ammo.rifle.explosive.png", "parentText": "70 RUB\n5,56-мм разрывной патрон"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/ammo.rifle.png", "parentText": "30 RUB\n5,56-мм патрон"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/ammo.pistol.png", "parentText": "20 RUB\nПистолетный патрон"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/ammo.shotgun.png", "parentText": "30 RUB\nДробь 12-го калибра"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/beancan_grenade.png", "parentText": "30 RUB\nГраната из банки бобов"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/explosive.satchel.png", "parentText": "80 RUB\nСумка с зарядом"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/explosive.timed.png", "parentText": "140 RUB\nВзрывчатка с таймером"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/ammo.rocket.basic.png", "parentText": "120 RUB\nРакета"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/rocket.launcher.png", "parentText": "120 RUB\nРакетница"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/rifle.ak.png", "parentText": "100 RUB\nШтурмовая винтовка"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/rifle.bolt.png", "parentText": "100 RUB\nВинтовка"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/smg.mp5.png", "parentText": "70 RUB\nMP5A4"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/smg.2.png", "parentText": "60 RUB\nСамодельный пистолет-пулемет"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/smg.thompson.png", "parentText": "60 RUB\nПистолет-пулемет Томпсона"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/rifle.semiauto.png", "parentText": "50 RUB\nПолуавтоматическая винтовка"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/pistol.semiauto.png", "parentText": "50 RUB\nПолуавтоматический пистолет"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/shotgun.pump.png", "parentText": "50 RUB\nПомповый дробовик"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/shotgun.double.png", "parentText": "30 RUB\nДвуствольный дробовик"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/pistol.revolver.png", "parentText": "20 RUB\nРевольвер"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/shotgun.waterpipe.png", "parentText": "20 RUB\nСамодельный дробовик"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/metal.facemask.png", "parentText": "40 RUB\nЖелезная маска"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/metal.plate.torso.png", "parentText": "40 RUB\nМеталлический нагрудник"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/coffeecan.helmet.png", "parentText": "20 RUB\nШлем из кофейной банки"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/roadsign.jacket.png", "parentText": "20 RUB\nБроня из дорожных знаков"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/roadsign.kilt.png", "parentText": "20 RUB\nКилт из дорожных знаков"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/door.hinged.toptier.png", "parentText": "80 RUB\nБронированная дверь"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/door.double.hinged.toptier.png", "parentText": "80 RUB\nДвойная бронированная дверь"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/gates.external.high.stone.png", "parentText": "30 RUB\nВысокие внешние каменные ворота"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/wall.external.high.stone.png", "parentText": "20 RUB\nВысокая внешняя каменная стена"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/wall.frame.garagedoor.png", "parentText": "30 RUB\nГаражная дверь"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/floor.ladder.hatch.png", "parentText": "20 RUB\nЛестничный люк"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/wood_ladder_short.png", "parentText": "20 RUB\nДеревянная лестница"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/autoturret.png", "parentText": "80 RUB\nАвтоматическая турель"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/guntrap.png", "parentText": "30 RUB\nЛовушка с дробовиком"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/syringe.medical.png", "parentText": "20 RUB\nМедицинский шприц"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/bed.png", "parentText": "20 RUB\nКровать"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/hatchet.png", "parentText": "20 RUB\nТопор"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/pickaxe.png", "parentText": "20 RUB\nКирка"},
+    {"src": "https://moscow-cdn.ru/rust/items/icons256/icepick.salvaged.png", "parentText": "30 RUB\nСамодельный ледоруб"},
+    {"src": "https://pic.moscow.ovh/images/2021/11/19/3c3abcf6cb765dca3470129b6fcac61a.png", "parentText": ""}
+]
+
+save_directory = "G:/cursor/css/item/images"
+os.makedirs(save_directory, exist_ok=True)
+
+for item in image_urls_data:
+    title = item["parentText"].split("\n")[-1].strip() # Extract product name from parentText
+    image_url = item["src"]
+    if title and image_url.startswith("https://moscow-cdn.ru/rust/items/icons256/"):
+        filename = f"{title}.png"
+        download_image(image_url, filename, save_directory)
+
+

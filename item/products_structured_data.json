@@ -1,0 +1,667 @@
+[
+    {
+        "name": "Верстак 1-го уровня",
+        "price": "60 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Верстак 2-го уровня",
+        "price": "100 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Верстак 3-го уровня",
+        "price": "180 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Зеленая карта доступа",
+        "price": "20 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Синяя карта доступа",
+        "price": "40 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Красная карта доступа",
+        "price": "60 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Электрический предохранитель",
+        "price": "20 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Гроб",
+        "price": "30 RUB",
+        "quantity": 3
+    },
+    {
+        "name": "180 RUB x4 -10% Взрывчатка с таймером",
+        "price": "200 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Ракета",
+        "price": "120 RUB",
+        "quantity": 4
+    },
+    {
+        "name": "Зажигательная ракета",
+        "price": "80 RUB",
+        "quantity": 4
+    },
+    {
+        "name": "Скоростная ракета",
+        "price": "60 RUB",
+        "quantity": 4
+    },
+    {
+        "name": "5,56-мм разрывной патрон",
+        "price": "150 RUB",
+        "quantity": 256
+    },
+    {
+        "name": "5,56-мм патрон",
+        "price": "20 RUB",
+        "quantity": 128
+    },
+    {
+        "name": "Пистолетный патрон",
+        "price": "15 RUB",
+        "quantity": 128
+    },
+    {
+        "name": "Сумка с зарядом",
+        "price": "80 RUB",
+        "quantity": 4
+    },
+    {
+        "name": "Граната из банки бобов",
+        "price": "40 RUB",
+        "quantity": 10
+    },
+    {
+        "name": "40-мм фугасная граната",
+        "price": "60 RUB",
+        "quantity": 6
+    },
+    {
+        "name": "Ракета РСЗО",
+        "price": "50 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Модуль целеуказания РСЗО",
+        "price": "60 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Сигнальная граната",
+        "price": "100 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Ракетница",
+        "price": "140 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Многозарядный гранатомет",
+        "price": "100 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Пулемет М249",
+        "price": "120 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "HMLMG",
+        "price": "100 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Винтовка L96",
+        "price": "100 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Штурмовая винтовка",
+        "price": "80 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Штурмовая винтовка LR-300",
+        "price": "80 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "MP5A4",
+        "price": "60 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Винтовка M39",
+        "price": "50 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "М92 Беретта",
+        "price": "40 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Двуствольный дробовик",
+        "price": "20 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Прицел 16х",
+        "price": "30 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Прицел 8х",
+        "price": "20 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Железная маска",
+        "price": "30 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Металлический нагрудник",
+        "price": "30 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Килт из дорожных знаков",
+        "price": "20 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Антирадиационный костюм",
+        "price": "20 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Металлолом",
+        "price": "50 RUB",
+        "quantity": 100
+    },
+    {
+        "name": "Дерево",
+        "price": "25 RUB",
+        "quantity": 5000
+    },
+    {
+        "name": "Камни",
+        "price": "25 RUB",
+        "quantity": 5000
+    },
+    {
+        "name": "Фрагменты металла",
+        "price": "50 RUB",
+        "quantity": 5000
+    },
+    {
+        "name": "Металл высокого качества",
+        "price": "50 RUB",
+        "quantity": 50
+    },
+    {
+        "name": "Уголь",
+        "price": "30 RUB",
+        "quantity": 5000
+    },
+    {
+        "name": "Сера",
+        "price": "50 RUB",
+        "quantity": 2000
+    },
+    {
+        "name": "Порох",
+        "price": "80 RUB",
+        "quantity": 2000
+    },
+    {
+        "name": "Explosives",
+        "price": "50 RUB",
+        "quantity": 25
+    },
+    {
+        "name": "Дизельное топливо",
+        "price": "40 RUB",
+        "quantity": 2
+    },
+    {
+        "name": "Топливо низкого качества",
+        "price": "40 RUB",
+        "quantity": 500
+    },
+    {
+        "name": "Ткань",
+        "price": "40 RUB",
+        "quantity": 1000
+    },
+    {
+        "name": "Кожа",
+        "price": "40 RUB",
+        "quantity": 1000
+    },
+    {
+        "name": "Камера видеонаблюдения",
+        "price": "40 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Компьютер наведения",
+        "price": "40 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Шестерни",
+        "price": "30 RUB",
+        "quantity": 5
+    },
+    {
+        "name": "Старые микросхемы",
+        "price": "40 RUB",
+        "quantity": 5
+    },
+    {
+        "name": "Металлическая труба",
+        "price": "30 RUB",
+        "quantity": 5
+    },
+    {
+        "name": "Корпус винтовки",
+        "price": "40 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Корпус пистолет-пулемета",
+        "price": "30 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Корпус полуавтомата",
+        "price": "20 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Металлическая пружина",
+        "price": "30 RUB",
+        "quantity": 3
+    },
+    {
+        "name": "Набор для шитья",
+        "price": "20 RUB",
+        "quantity": 4
+    },
+    {
+        "name": "Веревка",
+        "price": "15 RUB",
+        "quantity": 4
+    },
+    {
+        "name": "Брезент",
+        "price": "15 RUB",
+        "quantity": 4
+    },
+    {
+        "name": "Бронированная дверь",
+        "price": "60 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Двойная бронированная дверь",
+        "price": "60 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Лестничный люк",
+        "price": "30 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Высокие внешние каменные ворота",
+        "price": "30 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Высокая внешняя каменная стена",
+        "price": "50 RUB",
+        "quantity": 5
+    },
+    {
+        "name": "Высокие внешние деревянные ворота",
+        "price": "20 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Высокая внешняя деревянная стена",
+        "price": "25 RUB",
+        "quantity": 5
+    },
+    {
+        "name": "Деревянная лестница",
+        "price": "20 RUB",
+        "quantity": 2
+    },
+    {
+        "name": "Металлическая баррикада",
+        "price": "10 RUB",
+        "quantity": 5
+    },
+    {
+        "name": "Малый НПЗ",
+        "price": "30 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Большая печь",
+        "price": "40 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Топор",
+        "price": "10 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Кирка",
+        "price": "10 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Самодельный ледоруб",
+        "price": "20 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Отбойный молоток",
+        "price": "50 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Медицинский шприц",
+        "price": "10 RUB",
+        "quantity": 4
+    },
+    {
+        "name": "Большая аптечка",
+        "price": "10 RUB",
+        "quantity": 3
+    },
+    {
+        "name": "Черника",
+        "price": "10 RUB",
+        "quantity": 3
+    },
+    {
+        "name": "Зенитная турель",
+        "price": "30 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Автоматическая турель",
+        "price": "40 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Провод",
+        "price": "20 RUB",
+        "quantity": 2
+    },
+    {
+        "name": "Малый генератор",
+        "price": "20 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Большая солнечная панель",
+        "price": "20 RUB",
+        "quantity": 2
+    },
+    {
+        "name": "Ветрогенератор",
+        "price": "30 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Большой аккумулятор",
+        "price": "20 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Разветвитель",
+        "price": "10 RUB",
+        "quantity": 2
+    },
+    {
+        "name": "Переключатель",
+        "price": "10 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Комбинатор питания",
+        "price": "10 RUB",
+        "quantity": 2
+    },
+    {
+        "name": "Электрический разветвитель",
+        "price": "10 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Решетчатый настил",
+        "price": "20 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Explosives",
+        "price": "100 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "5,56-мм разрывной патрон",
+        "price": "70 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "5,56-мм патрон",
+        "price": "30 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Пистолетный патрон",
+        "price": "20 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Дробь 12-го калибра",
+        "price": "30 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Граната из банки бобов",
+        "price": "30 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Сумка с зарядом",
+        "price": "80 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Взрывчатка с таймером",
+        "price": "140 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Ракета",
+        "price": "120 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Ракетница",
+        "price": "120 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Штурмовая винтовка",
+        "price": "100 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Винтовка",
+        "price": "100 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "MP5A4",
+        "price": "70 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Самодельный пистолет-пулемет",
+        "price": "60 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Пистолет-пулемет Томпсона",
+        "price": "60 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Полуавтоматическая винтовка",
+        "price": "50 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Полуавтоматический пистолет",
+        "price": "50 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Помповый дробовик",
+        "price": "50 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Двуствольный дробовик",
+        "price": "30 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Револьвер",
+        "price": "20 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Самодельный дробовик",
+        "price": "20 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Железная маска",
+        "price": "40 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Металлический нагрудник",
+        "price": "40 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Шлем из кофейной банки",
+        "price": "20 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Броня из дорожных знаков",
+        "price": "20 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Килт из дорожных знаков",
+        "price": "20 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Бронированная дверь",
+        "price": "80 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Двойная бронированная дверь",
+        "price": "80 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Высокие внешние каменные ворота",
+        "price": "30 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Высокая внешняя каменная стена",
+        "price": "20 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Гаражная дверь",
+        "price": "30 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Лестничный люк",
+        "price": "20 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Деревянная лестница",
+        "price": "20 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Автоматическая турель",
+        "price": "80 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Ловушка с дробовиком",
+        "price": "30 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Медицинский шприц",
+        "price": "20 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Кровать",
+        "price": "20 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Топор",
+        "price": "20 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Кирка",
+        "price": "20 RUB",
+        "quantity": 1
+    },
+    {
+        "name": "Самодельный ледоруб",
+        "price": "30 RUB",
+        "quantity": 1
+    }
+]

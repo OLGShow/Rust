@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [react()],
   
   // Base path для GitHub Pages (название репозитория)
-  base: process.env.NODE_ENV === 'production' ? '/Rust/' : '/',
+  base: '/',
   
   resolve: {
     alias: {
